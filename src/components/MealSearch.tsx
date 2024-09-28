@@ -2,15 +2,15 @@
 
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import MealCard from './MealCard'
+import { useRouter } from 'next/navigation'
 
 interface MealSearchProps {
   sessionId?: string
 }
 
-interface ResponseData {
+interface SearchResultProps {
   hits: {
     [key: string]: any;
   }[];
@@ -19,42 +19,117 @@ interface ResponseData {
 const MealSearch: FC<MealSearchProps> = ({
   sessionId
 }) => {
-  
-  const router = useRouter()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [searchInput, setSearchInput] = useState<string>('')
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchResults, setSearchResults] = useState<SearchResultProps>({ hits: [] })
+  const [searchPagination, setSearchPagination] = useState()
 
-  const [fetchedResponseData, setFetchedResponseData] = useState<ResponseData>({ hits: [] })
+  const router = useRouter()
+
+  useEffect(() => storePathValues, [router]);
+
+  // function that stores prev value in session storage
+  function storePathValues() {
+    const storage = globalThis?.sessionStorage;
+    if (!storage) return;
+
+    const prevPath = storage.getItem("currentPath");
+    if (prevPath) {
+      storage.setItem("prevPath", prevPath);
+    }
+
+    storage.setItem("currentPath", globalThis.location.pathname);
+  }
+
+  // deletes created cache after 10 mins without hard-refreshing or directing from non-child path
+  useEffect(() => {
+    const storage = globalThis?.sessionStorage;
+
+    if (storage) {
+      const prevPath = storage.getItem("currentPath");
+      if (prevPath && !prevPath.startsWith("/generate-meal/")) {
+        storage.removeItem('searchQuery');
+        storage.removeItem('searchResults');
+        storage.removeItem('pagination');
+      }
+    }
+
+    const timeoutId = setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        storage.removeItem('searchQuery');
+        storage.removeItem('searchResults');
+        storage.removeItem('pagination');
+      }
+    }, 10 * 60 * 1000); // 10 minutes
   
-  const fetchData = async (data: any) => {
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+  
+
+  useEffect(() => {
+    const storage = globalThis?.sessionStorage;
+    if (!storage) {return}
+
+    const storedSearchQuery = storage.getItem("searchQuery");
+    const storedSearchResults = storage.getItem("searchResults");
+
+    if (storedSearchQuery && storedSearchResults) {
+
+      setSearchQuery(storedSearchQuery)
+      setSearchResults(JSON.parse(storedSearchResults))
+
+      fetchSearchResults({
+        "q": storedSearchQuery,
+        "health": "",
+        "diet": "",
+        "calories": "",
+        "ingr": "",
+      })
+    }
+  }, [])
+
+  const fetchSearchResults = async (mealData: any) => {
+    const storage = globalThis?.sessionStorage;
+    if (!storage) {return}
+
     try {
       setIsLoading(true)
 
-      const response = await axios.post('/api/meal/get', data)
-      const responseData = response.data
+      const response = await axios.post('/api/meal/all', mealData)
+      const results = response.data
 
-      setFetchedResponseData(responseData)
-
-      console.log(responseData)
+      setSearchResults(results)
+      storage.setItem('searchResults', JSON.stringify(results));
 
     } catch (error) {
       console.error(error)
-      setFetchedResponseData({ hits: [] })
+      setSearchResults({ hits: [] })
+      storage.setItem('searchResults', '');
     }
     finally {
       setIsLoading(false)
     }
-
-    router.refresh()
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (searchInput) {
-      fetchData({
-        "q": searchInput,
+    if (!searchQuery.replaceAll(' ', '')) {
+      console.log('L bozo')
+      return
+    }
+
+    const storage = globalThis?.sessionStorage;
+    if (!storage) {return}
+
+    storage.setItem('searchQuery', searchQuery);
+
+    if (searchQuery) {
+      fetchSearchResults({
+        "q": searchQuery,
         "health": "",
         "diet": "",
         "calories": "",
@@ -69,8 +144,8 @@ const MealSearch: FC<MealSearchProps> = ({
         <div className='flex flex-wrap md:flex-nowrap lg:flex-wrap xl:flex-nowrap justify-center align-center gap-4'>
 
           <label className="input input-bordered flex items-center gap-2 w-full max-w-[20rem]">
-            <input 
-              onChange={(e) => {setSearchInput(e.target.value)}}
+            <input
+              onChange={(e) => {setSearchQuery(e.target.value)}}
               type="text" className="grow" placeholder="Enter your meal..." 
             />
             <svg
@@ -232,21 +307,37 @@ const MealSearch: FC<MealSearchProps> = ({
 
       </form>
 
-      <ul className='border-4 border-red-400 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
+      <div className='flex flex-col gap-8'>
         
         {isLoading ? (
           <Loader2 className='animate-spin h-4 w-4' />
         ) : (
-          !fetchedResponseData.hits.length ? (
+          !searchResults.hits.length ? (
             <p>Nothing to show</p>
           ) : (
-            fetchedResponseData.hits.map((detail: any) => (
-              <MealCard detail={detail} />
-            ))
+            <>
+              <div className='border-4 border-red-400 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
+                {searchResults.hits.map((mealDetail: any) => (
+                  <MealCard mealDetail={mealDetail} />
+                ))}
+              </div>
+
+
+              <div className='border-4 border-red-400 w-full flex justify-center'>
+                <div className="join bg-red-500 flex w-full max-w-[40rem]">
+                  <button className="flex-1 join-item btn">1</button>
+                  <button className="flex-1 join-item btn">2</button>
+                  <button className="flex-1 join-item btn btn-disabled">...</button>
+                  <button className="flex-1 join-item btn">99</button>
+                  <button className="flex-1 join-item btn">100</button>
+                </div>
+              </div>
+
+            </>
           )
         )}
 
-      </ul>
+      </div>
     </>
 
   )

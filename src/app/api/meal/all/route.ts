@@ -1,8 +1,9 @@
 export async function POST(req: Request) {
   try {
-    const { mealId } = await req.json()
+    const body = await req.json()
     const response = await fetch(
-      `https://www.edamam.com/api/recipes/v2/${mealId}?type=public`
+      // `https://api.edamam.com/search?app_id=900da95e&app_key=40698503668e0bb3897581f4766d77f9&q=${body.q}`
+      `https://www.edamam.com/api/recipes/v2?type=public&_=1727364072720&q=${body.q}`
     )
     
     const data = await response.json()
@@ -16,6 +17,7 @@ export async function POST(req: Request) {
 
   } catch (error) {
     console.log(error)
+
     return new Response('Invalid request', { status: 400 })
   }
   finally {}

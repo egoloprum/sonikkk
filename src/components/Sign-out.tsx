@@ -14,7 +14,7 @@ const SignOut: FC<SignOutProps> = ({style}) => {
 
 
   return (
-    <button className='flex gap-2 items-center bg-red-500 w-full' 
+    <button className='flex gap-2 items-center justify-center w-full' 
       onClick={async () => {
         setIsSigningOut(true)
         try {
@@ -27,7 +27,7 @@ const SignOut: FC<SignOutProps> = ({style}) => {
         }
       }}
     >
-      <span>Signout</span>
+      <span className='text-center'>Signout</span>
       {isSigningOut ? (
         <Loader2 className='animate-spin h-4 w-4' />
         ) : (
