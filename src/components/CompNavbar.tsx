@@ -10,21 +10,21 @@ const CompNavbar = async ({}) => {
 
   return (
     <div className='bg-indigo-400 p-2 w-full flex flex-wrap md:flex-nowrap lg:flex-wrap xl:flex-nowrap justify-center gap-6 px-4'>
-      <Link className='btn max-w-[10rem] w-full text-center' href='/'>
+      <Link className='btn max-w-[10rem] w-full text-center px-0' href='/'>
         <span className='text-[1.1rem]'>Home</span>
       </Link>
-      <Link className='btn max-w-[10rem] w-full text-center' href='/generate-meal'>
+      <Link className='btn max-w-[10rem] w-full text-center px-0' href='/generate-meal'>
         <span className='text-[1.1rem]'>Meal generate</span> 
       </Link>
-      <Link className='btn max-w-[10rem] w-full text-center' href='/blog'>
+      <Link className='btn max-w-[10rem] w-full text-center px-0' href='/blog'>
         <span className='text-[1.1rem]'>Blog</span>
       </Link>
-      <div className='btn max-w-[10rem] text-[1.1rem] w-full flex items-center justify-center'>
+      <div className='btn max-w-[10rem] text-[1.1rem] w-full flex items-center justify-center px-0'>
         
         {!session ? (
-          <SignIn style='flex gap-2 items-center justify-center w-full' />
+          <SignIn style='flex gap-2 items-center justify-center w-full h-full' />
         ) : (
-          <SignOut style='flex gap-2 items-center justify-center w-full' />
+          <SignOut style='flex gap-2 items-center justify-center w-full h-full' />
         )}
         
       </div>

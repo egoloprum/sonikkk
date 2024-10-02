@@ -16,9 +16,7 @@ const page:FC<pageProps> = async ({ params }) => {
   const session = await getServerSession(authOptions)
 
   return (
-    <div>
-      id: {mealId}
-    
+    <div>    
       <MealDetail mealId={mealId} />
     </div>
 

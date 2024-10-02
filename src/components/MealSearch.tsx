@@ -11,8 +11,8 @@ interface MealSearchProps {
 }
 
 interface SearchResultProps {
-  hits: {
-    [key: string]: any;
+  results: {
+    [key: string]: string;
   }[];
 }
 
@@ -22,7 +22,7 @@ const MealSearch: FC<MealSearchProps> = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [searchResults, setSearchResults] = useState<SearchResultProps>({ hits: [] })
+  const [searchResults, setSearchResults] = useState<SearchResultProps>({ results: [] })
   const [searchPagination, setSearchPagination] = useState()
 
   const router = useRouter()
@@ -47,25 +47,22 @@ const MealSearch: FC<MealSearchProps> = ({
     const storage = globalThis?.sessionStorage;
 
     if (storage) {
-      const prevPath = storage.getItem("currentPath");
-      if (prevPath && !prevPath.startsWith("/generate-meal/")) {
-        storage.removeItem('searchQuery');
-        storage.removeItem('searchResults');
-        storage.removeItem('pagination');
+      const prevPath = storage.getItem("prevPath");
+
+      if (prevPath && prevPath.startsWith("/generate-meal/")) {
+        console.log("blah blah")
+      }
+      else {
+        console.log("blah")
+      }
+
+      if (prevPath && prevPath.startsWith("/generate-meal/")) {
+        // storage.removeItem('searchQuery');
+        // storage.removeItem('searchResults');
+        // storage.removeItem('pagination');
+ 
       }
     }
-
-    const timeoutId = setTimeout(() => {
-      if (typeof window !== 'undefined') {
-        storage.removeItem('searchQuery');
-        storage.removeItem('searchResults');
-        storage.removeItem('pagination');
-      }
-    }, 10 * 60 * 1000); // 10 minutes
-  
-    return () => {
-      clearTimeout(timeoutId);
-    };
   }, []);
   
 
@@ -81,32 +78,30 @@ const MealSearch: FC<MealSearchProps> = ({
       setSearchQuery(storedSearchQuery)
       setSearchResults(JSON.parse(storedSearchResults))
 
-      fetchSearchResults({
-        "q": storedSearchQuery,
-        "health": "",
-        "diet": "",
-        "calories": "",
-        "ingr": "",
-      })
+      // fetchSearchResults({
+      //   "name": storedSearchQuery
+      // })
     }
   }, [])
 
-  const fetchSearchResults = async (mealData: any) => {
+  const fetchSearchResults = async (searchData: object) => {
     const storage = globalThis?.sessionStorage;
     if (!storage) {return}
 
     try {
       setIsLoading(true)
 
-      const response = await axios.post('/api/meal/all', mealData)
+      const response = await axios.post('/api/v2/meal/all', searchData);
       const results = response.data
+
+      console.log(JSON.stringify(results))
 
       setSearchResults(results)
       storage.setItem('searchResults', JSON.stringify(results));
 
     } catch (error) {
       console.error(error)
-      setSearchResults({ hits: [] })
+      setSearchResults({ results: [] })
       storage.setItem('searchResults', '');
     }
     finally {
@@ -128,12 +123,9 @@ const MealSearch: FC<MealSearchProps> = ({
     storage.setItem('searchQuery', searchQuery);
 
     if (searchQuery) {
+
       fetchSearchResults({
-        "q": searchQuery,
-        "health": "",
-        "diet": "",
-        "calories": "",
-        "ingr": "",
+        "name": searchQuery,
       })
     }
   }
@@ -146,6 +138,7 @@ const MealSearch: FC<MealSearchProps> = ({
           <label className="input input-bordered flex items-center gap-2 w-full max-w-[20rem]">
             <input
               onChange={(e) => {setSearchQuery(e.target.value)}}
+              value={searchQuery}
               type="text" className="grow" placeholder="Enter your meal..." 
             />
             <svg
@@ -312,12 +305,12 @@ const MealSearch: FC<MealSearchProps> = ({
         {isLoading ? (
           <Loader2 className='animate-spin h-4 w-4' />
         ) : (
-          !searchResults.hits.length ? (
+          !searchResults.results.length ? (
             <p>Nothing to show</p>
           ) : (
             <>
               <div className='border-4 border-red-400 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
-                {searchResults.hits.map((mealDetail: any) => (
+                {searchResults.results.map((mealDetail: any) => (
                   <MealCard mealDetail={mealDetail} />
                 ))}
               </div>
