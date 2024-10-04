@@ -12,7 +12,7 @@ const page: FC<pageProps> = async ({}) => {
 
   return (
     <div className='border-4 border-red-300 flex justify-center'>
-      <div className='border-4 border-blue-300 max-w-[1300px] w-full m-4 mx-10 p-4'>
+      <div className='border-4 border-blue-300 w-full m-4 mx-10 p-4'>
         <p className='text-xl font-bold'>Generate meal</p>
 
         <MealSearch sessionId={session?.user.id} />

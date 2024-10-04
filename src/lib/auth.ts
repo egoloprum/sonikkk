@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      const { data: userExists } = await supabase.from('user').select('*').eq('userId', user.id).single()
+      const { data: userExists } = await supabase.from('user').select('*').eq('user_id', user.id).single()
 
       if (!userExists) {
         if (user) {
@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
           username: token.name,
           email: token.email,
           image: token.picture,
-          userId: token.id,
+          user_id: token.id,
         };
     
         const { data: userCreated } = await supabase
@@ -84,8 +84,12 @@ export const authOptions: NextAuthOptions = {
       return session
     },
 
-    redirect() {
-      return '/'
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     }
   },
 

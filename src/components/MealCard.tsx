@@ -1,6 +1,5 @@
 "use client"
 
-import { extractIdFromUrl, trimDecimalPlaces } from '@/lib/utils';
 import Image from 'next/image'
 import Link from 'next/link';
 import { FC } from 'react'
@@ -21,11 +20,11 @@ const MealCard: FC<MealCardProps> = ({
 
 
   return (
-    <div onClick={() => handleSubmit(mealId)} key={mealId} className='relative border-4 border-green-300 hover:scale-105 transition'>
+    <div onClick={() => handleSubmit(mealId)} key={mealId} className='relative border-4 border-green-300'>
       <Image
         fill
         referrerPolicy='no-referrer'
-        className='max-h-[18.5rem] max-w-[18.5rem] aspect-square object-cover relative'
+        className='max-h-[16.5rem] max-w-[18.5rem] aspect-square object-cover relative hover:scale-105 transition duration-300'
         src={mealDetail.thumbnail_url || ''}
         alt='food'
         style={{

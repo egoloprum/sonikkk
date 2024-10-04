@@ -2,9 +2,9 @@
 
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import MealCard from './MealCard'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface MealSearchProps {
   sessionId?: string
@@ -21,88 +21,34 @@ const MealSearch: FC<MealSearchProps> = ({
 }) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchInput, setSearchInput] = useState<string>('')
   const [searchResults, setSearchResults] = useState<SearchResultProps>({ results: [] })
   const [searchPagination, setSearchPagination] = useState()
 
+  const searchParams = useSearchParams()
+  const searchQuery = (searchParams!.get('search') || '' ) as string
+
   const router = useRouter()
 
-  useEffect(() => storePathValues, [router]);
-
-  // function that stores prev value in session storage
-  function storePathValues() {
-    const storage = globalThis?.sessionStorage;
-    if (!storage) return;
-
-    const prevPath = storage.getItem("currentPath");
-    if (prevPath) {
-      storage.setItem("prevPath", prevPath);
-    }
-
-    storage.setItem("currentPath", globalThis.location.pathname);
-  }
-
-  // deletes created cache after 10 mins without hard-refreshing or directing from non-child path
   useEffect(() => {
-    const storage = globalThis?.sessionStorage;
+    if (searchQuery.length) {
+      fetchSearchResults({"name": searchQuery})
 
-    if (storage) {
-      const prevPath = storage.getItem("prevPath");
-
-      if (prevPath && prevPath.startsWith("/generate-meal/")) {
-        console.log("blah blah")
-      }
-      else {
-        console.log("blah")
-      }
-
-      if (prevPath && prevPath.startsWith("/generate-meal/")) {
-        // storage.removeItem('searchQuery');
-        // storage.removeItem('searchResults');
-        // storage.removeItem('pagination');
- 
-      }
     }
-  }, []);
-  
-
-  useEffect(() => {
-    const storage = globalThis?.sessionStorage;
-    if (!storage) {return}
-
-    const storedSearchQuery = storage.getItem("searchQuery");
-    const storedSearchResults = storage.getItem("searchResults");
-
-    if (storedSearchQuery && storedSearchResults) {
-
-      setSearchQuery(storedSearchQuery)
-      setSearchResults(JSON.parse(storedSearchResults))
-
-      // fetchSearchResults({
-      //   "name": storedSearchQuery
-      // })
-    }
-  }, [])
+  }, [searchQuery])
 
   const fetchSearchResults = async (searchData: object) => {
-    const storage = globalThis?.sessionStorage;
-    if (!storage) {return}
-
     try {
       setIsLoading(true)
 
       const response = await axios.post('/api/v2/meal/all', searchData);
       const results = response.data
 
-      console.log(JSON.stringify(results))
-
       setSearchResults(results)
-      storage.setItem('searchResults', JSON.stringify(results));
 
     } catch (error) {
       console.error(error)
       setSearchResults({ results: [] })
-      storage.setItem('searchResults', '');
     }
     finally {
       setIsLoading(false)
@@ -112,20 +58,20 @@ const MealSearch: FC<MealSearchProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!searchQuery.replaceAll(' ', '')) {
+    setSearchInput(searchInput.replace(/\s+/g, ''))
+
+    if (!searchInput.replaceAll(' ', '')) {
       console.log('L bozo')
       return
     }
 
-    const storage = globalThis?.sessionStorage;
-    if (!storage) {return}
-
-    storage.setItem('searchQuery', searchQuery);
-
-    if (searchQuery) {
+    if (searchInput) {
+      router.push(
+        `?search=${searchInput}`
+      )
 
       fetchSearchResults({
-        "name": searchQuery,
+        "name": searchInput,
       })
     }
   }
@@ -137,8 +83,10 @@ const MealSearch: FC<MealSearchProps> = ({
 
           <label className="input input-bordered flex items-center gap-2 w-full max-w-[20rem]">
             <input
-              onChange={(e) => {setSearchQuery(e.target.value)}}
-              value={searchQuery}
+              value={
+                searchInput ? searchInput : searchQuery
+              }
+              onChange={(e) => setSearchInput(e.target.value)}
               type="text" className="grow" placeholder="Enter your meal..." 
             />
             <svg

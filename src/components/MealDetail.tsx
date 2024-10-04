@@ -1,25 +1,28 @@
 "use client"
 
 import axios from 'axios'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Star } from 'lucide-react'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface MealDetailProps {
-  mealId: string
+  meal_id: string
+  alreadyLiked: boolean
 }
 
 const MealDetail: FC<MealDetailProps> = ({
-  mealId
+  meal_id, alreadyLiked
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [btnLoading, setBtnLoading] = useState<boolean>(false)
   const [searchResult, setSearchResult] = useState<Meal>()
 
   const fetchData = async () => {
     try {
       setIsLoading(true)
 
-      const response = await axios.post('/api/v2/meal/each', JSON.stringify({ "id": mealId }))
+      const response = await axios.post('/api/v2/meal/each', JSON.stringify({ "id": meal_id }))
       const responseData = response.data
 
       setSearchResult(responseData)
@@ -40,6 +43,25 @@ const MealDetail: FC<MealDetailProps> = ({
   useEffect(() => {
     fetchData()
   }, [])
+
+  const handleSubmit = async () => {
+    if (alreadyLiked) { return }
+
+    try {
+      setBtnLoading(true)
+
+      const response = await axios.post('/api/v2/meal/liked/add', JSON.stringify(searchResult))
+      toast.success("Meal is saved successfully.")
+
+    } catch (error) {
+      console.log(error)
+      toast.error("There was a problem saving meal.")
+    }
+    finally {
+      setBtnLoading(false)
+    }
+  }
+
   
 
   return (
@@ -50,7 +72,7 @@ const MealDetail: FC<MealDetailProps> = ({
           !searchResult ? (
             <div>Nothing to show</div>
           ) : (
-            <div className='relative max-w-[1300px] w-full h-full border-4 border-red-400 flex gap-4'>
+            <div className='relative w-full h-full border-4 border-red-400 flex gap-4'>
               <div className='basis-1/4 flex flex-col gap-4 aspect-square border-4 border-blue-400'>
                 <div className='relative max-w-72 w-full aspect-square'>
                   <Image
@@ -70,7 +92,24 @@ const MealDetail: FC<MealDetailProps> = ({
                 </div>
 
                 <div className='border-4 border-green-400 mt-auto'>
-                  <button>Save</button>
+                  <button 
+                    onClick={handleSubmit}
+                    className='btn w-full'
+                  >
+                    {
+                      alreadyLiked ? (
+                        <>
+                          <span>Saved</span>
+                          <Star className='max-w-[15px]' />
+                        </>
+                      ) : 
+                      (btnLoading ? (
+                        <Loader2 className='animate-spin h-4 w-4' />
+                      ) : (
+                        <span>Save</span>
+                      ))
+                    }
+                  </button>
                 </div>
               </div>
 

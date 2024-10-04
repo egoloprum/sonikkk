@@ -13,11 +13,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" data-theme="light">
       <body>
         <CompNavbar />
-        <Providers>{children}</Providers>
+        <main className="flex justify-center">
+          <div className="max-w-[1200px] p-4 w-full border-4 border-indigo-400">
+            <Providers>{children}</Providers>
+
+          </div>
+        </main>
       </body>
     </html>
   );
