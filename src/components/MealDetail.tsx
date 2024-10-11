@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { Loader2, Star } from 'lucide-react'
+import { Session } from 'next-auth'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -9,14 +10,16 @@ import toast from 'react-hot-toast'
 interface MealDetailProps {
   meal_id: string
   alreadyLiked: boolean
+  session: Session | null
 }
 
 const MealDetail: FC<MealDetailProps> = ({
-  meal_id, alreadyLiked
+  meal_id, alreadyLiked, session
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [btnLoading, setBtnLoading] = useState<boolean>(false)
   const [searchResult, setSearchResult] = useState<Meal>()
+  const [isAlreadyLiked, setIsAlreadyLiked] = useState<boolean>(false)
 
   const fetchData = async () => {
     try {
@@ -42,16 +45,27 @@ const MealDetail: FC<MealDetailProps> = ({
 
   useEffect(() => {
     fetchData()
+    setIsAlreadyLiked(alreadyLiked)
   }, [])
 
-  const handleSubmit = async () => {
-    if (alreadyLiked) { return }
+  const handleLikeAdd = async () => {
+    if (!session) {
+      toast.error("Go login")
+      return
+    }
+
+    if (isAlreadyLiked) { 
+      toast.error("Meal is already saved.")
+      return 
+    }
 
     try {
       setBtnLoading(true)
 
       const response = await axios.post('/api/v2/meal/liked/add', JSON.stringify(searchResult))
       toast.success("Meal is saved successfully.")
+
+      setIsAlreadyLiked(true)
 
     } catch (error) {
       console.log(error)
@@ -62,7 +76,27 @@ const MealDetail: FC<MealDetailProps> = ({
     }
   }
 
-  
+  const handleLikeRemove = async () => {
+    if (!session) {
+      toast.error("Go login")
+      return
+    }
+    try {
+      setBtnLoading(true)
+
+      const response = await axios.post('/api/v2/meal/liked/remove', JSON.stringify(searchResult))
+      toast.success("Meal is removed successfully.")
+
+      setIsAlreadyLiked(false)
+
+    } catch (error) {
+      console.log(error)
+      toast.error("There was a problem unsaving meal.")
+    }
+    finally {
+      setBtnLoading(false)
+    }
+  }
 
   return (
     <div className='border-4 border-green-400 flex justify-center p-4'>
@@ -92,24 +126,26 @@ const MealDetail: FC<MealDetailProps> = ({
                 </div>
 
                 <div className='border-4 border-green-400 mt-auto'>
-                  <button 
-                    onClick={handleSubmit}
-                    className='btn w-full'
-                  >
-                    {
-                      alreadyLiked ? (
-                        <>
-                          <span>Saved</span>
-                          <Star className='max-w-[15px]' />
-                        </>
-                      ) : 
-                      (btnLoading ? (
-                        <Loader2 className='animate-spin h-4 w-4' />
-                      ) : (
-                        <span>Save</span>
-                      ))
-                    }
-                  </button>
+                  {
+                    isAlreadyLiked ? 
+                      <button onClick={handleLikeRemove} className='btn w-full'>
+                        {btnLoading ? (
+                          <Loader2 className='animate-spin h-4 w-4' />
+                        ) : (
+                          <span>Remove</span>
+                        )}
+                      </button>
+                     : (
+                      <button onClick={handleLikeAdd} className='btn w-full'>
+                        {btnLoading ? (
+                          <Loader2 className='animate-spin h-4 w-4' />
+                        ) : (
+                          <span>Save</span>
+                        )}
+                      </button>
+                    )
+                  }
+
                 </div>
               </div>
 

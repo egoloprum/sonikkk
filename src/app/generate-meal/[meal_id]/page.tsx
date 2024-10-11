@@ -22,13 +22,11 @@ const page:FC<pageProps> = async ({ params }) => {
     .eq('user_id', session?.user.id)
     .single()
 
-  console.log(`${likedExists} likedExists`)
-
   const alreadyLiked = likedExists ? true : false
 
   return (
     <div>    
-      <MealDetail meal_id={meal_id} alreadyLiked={alreadyLiked}  />
+      <MealDetail meal_id={meal_id} alreadyLiked={alreadyLiked} session={session} />
     </div>
 
   )

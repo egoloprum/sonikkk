@@ -19,15 +19,22 @@ const CompNavbar = async ({}) => {
       <Link className='btn max-w-[10rem] w-full text-center px-0' href='/blog'>
         <span className='text-[1.1rem]'>Blog</span>
       </Link>
-      <div className='btn max-w-[10rem] text-[1.1rem] w-full flex items-center justify-center px-0'>
         
-        {!session ? (
+      {!session ? (
+        <div className='btn max-w-[10rem] text-[1.1rem] w-full flex items-center justify-center px-0'>
           <SignIn style='flex gap-2 items-center justify-center w-full h-full' />
-        ) : (
-          <SignOut style='flex gap-2 items-center justify-center w-full h-full' />
-        )}
+        </div>
+      ) : (
+        <>
+          <Link className='btn max-w-[10rem] w-full text-center px-0' href='/profile'>
+            <span className='text-[1.1rem]'>Profile</span>
+          </Link>
+          <div className='btn max-w-[10rem] text-[1.1rem] w-full flex items-center justify-center px-0'>
+            <SignOut style='flex gap-2 items-center justify-center w-full h-full' />
+          </div>
+        </>
+      )}
         
-      </div>
     </div>
   )
 }
