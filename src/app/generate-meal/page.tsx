@@ -1,4 +1,4 @@
-import MealSearch from '@/components/MealSearch';
+import MealSearch from '@/components/Meal/MealSearch'
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
 import { FC } from 'react'

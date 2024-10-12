@@ -2,19 +2,19 @@
 
 import axios from 'axios'
 import { Loader2, Star } from 'lucide-react'
-import { Session } from 'next-auth'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 interface MealDetailProps {
   meal_id: string
+  user_id: string | null
   alreadyLiked: boolean
-  session: Session | null
+  
 }
 
 const MealDetail: FC<MealDetailProps> = ({
-  meal_id, alreadyLiked, session
+  meal_id, alreadyLiked, user_id
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [btnLoading, setBtnLoading] = useState<boolean>(false)
@@ -49,14 +49,14 @@ const MealDetail: FC<MealDetailProps> = ({
   }, [])
 
   const handleLikeAdd = async () => {
-    if (!session) {
+    if (!user_id) {
       toast.error("Go login")
       return
     }
 
     if (isAlreadyLiked) { 
       toast.error("Meal is already saved.")
-      return 
+      return
     }
 
     try {
@@ -77,7 +77,7 @@ const MealDetail: FC<MealDetailProps> = ({
   }
 
   const handleLikeRemove = async () => {
-    if (!session) {
+    if (!user_id) {
       toast.error("Go login")
       return
     }

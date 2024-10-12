@@ -11,6 +11,12 @@ export async function POST(req: Request) {
       return new Response("Invalid request", { status: 400 })
     }
 
+    if (!session.user.id) {
+      console.log("User is not authenticated")
+      return new Response("Invalid request", { status: 400 })
+    }
+
+
     const meal = await req.json()
     const mealExistsId = await MealExists(meal.id) as string
 
@@ -25,7 +31,7 @@ export async function POST(req: Request) {
       const meal_id = mealCreateData.meal_id
 
       if (mealCreated && meal_id) {
-        const mealNewLiked = await MealLikeAdd(session, meal_id)
+        const mealNewLiked = await MealLikeAdd(session.user.id, meal_id)
 
         return new Response(
           mealNewLiked ? 
@@ -38,7 +44,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const mealLiked = await MealLikeAdd(session, mealExistsId)
+    const mealLiked = await MealLikeAdd(session.user.id, mealExistsId)
 
     return new Response(
       mealLiked ? 

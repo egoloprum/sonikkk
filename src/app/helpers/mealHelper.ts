@@ -1,16 +1,15 @@
 import { supabase } from "@/lib/supabase"
 import { QueryData } from "@supabase/supabase-js"
-import { Session } from "next-auth"
 
 export const MealExists = async (meal_id: string) => {
   const { data: mealExists, error } = await supabase.from('meal').select('*').eq('meal_id', meal_id).single()
-  console.log(`${mealExists} ${error} meal exists`)
+  // console.log(`${mealExists} meal exists`)
 
   if (error) {
     return null
   }
   
-  return mealExists
+  return mealExists.meal_id
 }
 
 export const MealCreator = async (meal: Meal) => {
@@ -41,10 +40,10 @@ export const MealCreator = async (meal: Meal) => {
   return { mealCreated: true, meal_id: newMealCreated.meal_id }
 }
 
-export const MealLikeAdd = async (session: Session, meal_id: string) => {
+export const MealLikeAdd = async (user_id: string, meal_id: string) => {
   const likedMealData = {
     meal_id: meal_id,
-    user_id: session.user.id
+    user_id: user_id
   }
 
   const { data: mealLiked } = await supabase
@@ -58,12 +57,21 @@ export const MealLikeAdd = async (session: Session, meal_id: string) => {
   return { mealLiked }
 } 
 
-export const MealLikeRemove = async (session: Session, meal_id: string) => {
+export const MealLikeRemove = async (user_id: string, meal_id: string) => {
   const {data, error} = await supabase
     .from('likedMeal')
     .delete()
     .eq('meal_id', meal_id)
-    .eq('user_id', session.user.id)
+    .eq('user_id', user_id)
+
+  return {data}
+}
+
+export const MealSelectByUser = async (user_id: string) => {
+  const {data} = await supabase
+    .from('likedMeal')
+    .select('*')
+    .eq('user_id', user_id)
 
   return {data}
 }

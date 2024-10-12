@@ -1,4 +1,4 @@
-import { MealCreator, MealExists, MealLikeRemove } from "@/app/helpers/mealHelper";
+import { MealExists, MealLikeRemove } from "@/app/helpers/mealHelper";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       return new Response("Invalid request", {status: 400})
     }
 
-    const mealRemoved = await MealLikeRemove(session, meal.id)
+    const mealRemoved = await MealLikeRemove(session.user.id, meal.id)
 
     return new Response(
       mealRemoved ? 

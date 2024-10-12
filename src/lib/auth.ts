@@ -62,7 +62,12 @@ export const authOptions: NextAuthOptions = {
           console.log(`${userCreated} user create error`)
         }
 
-        return token
+        return {
+          id: token.id,
+          name: token.name,
+          email: token.email,
+          picture: token.picture,
+        }
       }
 
       return {
