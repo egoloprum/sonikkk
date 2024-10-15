@@ -38,7 +38,7 @@ const MealCard: FC<MealCardProps> = ({
           {mealDetail.name}
         </Link>
 
-        <p className='bg-red-400 mt-auto'>calories: {mealDetail.nutrition.calories}</p>
+        <p className='bg-red-400 mt-auto'>calories: {mealDetail?.nutrition.calories}</p>
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     const api_key = process.env.RAPID_API_KEY
     const api_host = process.env.RAPID_API_HOST
 
-    const url = `https://tasty.p.rapidapi.com/recipes/list?q=${body.name}&from=0&size=10`;
+    const url = `https://tasty.p.rapidapi.com/recipes/list?q=${body.name}&from=0&size=15`;
     const options = {
       method: 'GET',
       headers: {

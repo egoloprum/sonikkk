@@ -14,7 +14,7 @@ export const MealExists = async (meal_id: string) => {
 
 export const MealCreator = async (meal: Meal) => {
   const mealData = {
-    meal_id:            meal.id,
+    meal_id:            meal.meal_id,
     name:               meal.name,
     description:        meal.description,
     thumbnail_url:      meal.thumbnail_url,
@@ -67,11 +67,26 @@ export const MealLikeRemove = async (user_id: string, meal_id: string) => {
   return {data}
 }
 
-export const MealSelectByUser = async (user_id: string) => {
+export const MealIDByUser = async (user_id: string) => {
   const {data} = await supabase
     .from('likedMeal')
-    .select('*')
+    .select('meal_id')
     .eq('user_id', user_id)
 
-  return {data}
+  return data as { meal_id: string }[]
+}
+
+export const MealSelector = async ( mealsLiked: {meal_id: string}[] ) => {
+  const mealsList: Meal[] = await Promise.all(
+    mealsLiked.map(async (meal) => {
+      const { data } = await supabase
+        .from('meal')
+        .select('*')
+        .eq('meal_id', meal.meal_id) as QueryData<{ data: Meal }>
+
+      return data
+    })
+  );
+
+  return mealsList
 }

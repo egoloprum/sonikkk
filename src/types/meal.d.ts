@@ -27,5 +27,5 @@ interface Meal {
   prep_time_minutes?: number
   cook_time_minutes?: number
 
-  id: string
+  meal_id: string
 }
