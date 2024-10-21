@@ -1,10 +1,4 @@
-import { FC } from 'react'
-
-interface loadingProps {
-  
-}
-
-const loading: FC<loadingProps> = ({}) => {
+const loading = ({}) => {
   return <div>loading</div>
 }
 

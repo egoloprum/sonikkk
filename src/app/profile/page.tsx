@@ -1,15 +1,10 @@
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
-import { FC } from 'react'
 import { MealIDByUser, MealSelector } from '../helpers/mealHelper'
 import MealCard from '@/components/Meal/MealCard'
 
-interface pageProps {
-  
-}
-
-const page: FC<pageProps> = async ({}) => {
+const page = async ({}) => {
   const session = await getServerSession(authOptions)
 
   if (!session) { notFound() }
@@ -29,7 +24,7 @@ const page: FC<pageProps> = async ({}) => {
 
         <div className='grid'>
           {mealsLiked.flat().map((meal: Meal) => (
-            <MealCard mealDetail={meal} />
+            <MealCard key={meal.meal_id} mealDetail={meal} />
           ))}
         </div>
       </div>

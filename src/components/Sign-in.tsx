@@ -19,6 +19,7 @@ const SignIn: FC<SignInProps> = ({style}) => {
       await signIn('google')
     }
     catch (error) {
+      console.log(error)
       toast.error('Something went wrong with your login.')
     } 
     finally {

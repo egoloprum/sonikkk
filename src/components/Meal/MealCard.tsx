@@ -5,10 +5,11 @@ import { FC } from 'react'
 
 interface MealCardProps {
   mealDetail: Meal
+  key: string
 }
 
 const MealCard: FC<MealCardProps> = ({
-  mealDetail
+  mealDetail, key
 }) => {
 
   const meal_id = mealDetail.meal_id
@@ -20,7 +21,7 @@ const MealCard: FC<MealCardProps> = ({
   }
 
   return (
-    <div onClick={() => handleSubmit(meal_id)} key={meal_id} 
+    <div onClick={() => handleSubmit(meal_id)} key={key} 
       className='border-4 rounded-xl border-green-300 w-full flex flex-wrap lg:flex-nowrap md:flex-nowrap sm:flex-nowrap md:gap-4 gap-2 my-4'
     >
       <div className='md:basis-1/3 overflow-hidden rounded-s-lg md:max-w-[18rem] md:max-h-[18rem] aspect-square'>
@@ -51,7 +52,7 @@ const MealCard: FC<MealCardProps> = ({
 
           <div className='grow  w-full flex flex-col gap-1'>
             {Object.keys(mealDetail.nutrition).filter((key) => key !== 'updated_at').map((key) => (
-              <p className='flex justify-between gap-2 text-sm md:text-base'>
+              <p key={key} className='flex justify-between gap-2 text-sm md:text-base'>
                 <span>{key}</span>
                 <span className='font-bold'>{mealDetail?.nutrition[key]}</span>
               </p>

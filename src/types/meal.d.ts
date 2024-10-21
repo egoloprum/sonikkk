@@ -17,8 +17,8 @@ interface Meal {
   slug?:          string
   nutrition:      Nutrition
 
-  tags?:          {}[]
-  topics?:        {}[]
+  tags?:          object[]
+  topics?:        object[]
 
   sections: {
     components: {

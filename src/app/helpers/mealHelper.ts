@@ -7,7 +7,7 @@ export const MealLikeAdd = async (user_id: string, meal_id: string) => {
     user_id: user_id
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('likedMeal')
     .insert(likedMealData)
     .select('*') as QueryData<{ mealLiked: object }[]>
@@ -20,7 +20,7 @@ export const MealLikeAdd = async (user_id: string, meal_id: string) => {
 } 
 
 export const MealLikeRemove = async (user_id: string, meal_id: string) => {
-  const {data, error} = await supabase
+  const {error} = await supabase
     .from('likedMeal')
     .delete()
     .eq('meal_id', meal_id)
@@ -83,14 +83,14 @@ export const MealSelectDetail = async (meal_id: string) => {
   return data as Meal
 }
 
-function isValidMeal(meal: Meal) {
-  return (
-    meal.meal_id &&
-    meal.name &&
-    meal.description &&
-    meal.thumbnail_url &&
-    Object.keys(meal.nutrition).length > 0 &&
-    meal.sections.length > 0 &&
-    meal.instructions.length > 0
-  );
-}
+// function isValidMeal(meal: Meal) {
+//   return (
+//     meal.meal_id &&
+//     meal.name &&
+//     meal.description &&
+//     meal.thumbnail_url &&
+//     Object.keys(meal.nutrition).length > 0 &&
+//     meal.sections.length > 0 &&
+//     meal.instructions.length > 0
+//   );
+// }

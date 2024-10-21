@@ -11,14 +11,12 @@ interface MealSearchProps {
   sessionId?: string
 }
 
-const MealSearch: FC<MealSearchProps> = ({
-  sessionId
-}) => {
+const MealSearch: FC<MealSearchProps> = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchResults, setSearchResults] = useState<Meal[]>()
-  const [searchPagination, setSearchPagination] = useState()
+  // const [searchPagination, setSearchPagination] = useState()
 
   const searchParams = useSearchParams()
   const searchQuery = (searchParams!.get('search') || '' ) as string
@@ -117,8 +115,8 @@ const MealSearch: FC<MealSearchProps> = ({
           ) : (
             <>
               <div className='flex flex-col gap-6'>
-                {searchResults.map((mealDetail: any) => (
-                  <MealCard mealDetail={mealDetail} />
+                {searchResults.map((mealDetail: Meal) => (
+                  <MealCard key={mealDetail.meal_id} mealDetail={mealDetail} />
                 ))}
               </div>
 

@@ -2,14 +2,10 @@
 
 import { Loader2, LogOut } from 'lucide-react'
 import { signOut } from 'next-auth/react'
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 
-interface SignOutProps {
-  style: string
-}
-
-const SignOut: FC<SignOutProps> = ({style}) => {
+const SignOut = () => {
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false)
 
 
@@ -20,6 +16,7 @@ const SignOut: FC<SignOutProps> = ({style}) => {
         try {
           await signOut()
         } catch (error) {
+          console.log(error)
           toast.error("There was a problem signing out")
         }
         finally {

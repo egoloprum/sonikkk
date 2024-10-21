@@ -2,7 +2,6 @@
 
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
-import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import MealCard from './MealCard'
@@ -61,7 +60,7 @@ const MealDetail: FC<MealDetailProps> = ({
     try {
       setBtnLoading(true)
 
-      const response = await axios.post('/api/meal/liked/add', JSON.stringify(searchResult))
+      await axios.post('/api/meal/liked/add', JSON.stringify(searchResult))
       toast.success("Meal is saved successfully.")
 
       setIsAlreadyLiked(true)
@@ -83,7 +82,7 @@ const MealDetail: FC<MealDetailProps> = ({
     try {
       setBtnLoading(true)
 
-      const response = await axios.post('/api/meal/liked/remove', JSON.stringify(searchResult))
+      await axios.post('/api/meal/liked/remove', JSON.stringify(searchResult))
       toast.success("Meal is removed successfully.")
 
       setIsAlreadyLiked(false)
@@ -109,7 +108,7 @@ const MealDetail: FC<MealDetailProps> = ({
             <div className='flex gap-4 flex-col lg:flex-row'>
 
               <div className='md:basis-4/5'>
-                <MealCard mealDetail={searchResult} />
+                <MealCard key={searchResult.meal_id} mealDetail={searchResult} />
               </div>
 
               <div 
