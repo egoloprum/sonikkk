@@ -37,7 +37,7 @@ const CompNavbar = async ({}) => {
               <span className='text-[0.95rem] font-light'>Followers</span>
             </Link>
             <div className='btn max-w-[9rem] text-[0.95rem] font-light w-full flex items-center justify-center px-0'>
-              <SignOut style='flex gap-2 items-center justify-center w-full h-full' />
+              <SignOut />
             </div>
           </>
         )}
