@@ -30,69 +30,49 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async jwt ({token, user}) {
-      if (!user) {
-        // Handle the case where user is undefined
-        return token;
-      }
-
-      const { data: userExists } = await supabase.from('user').select('*').eq('user_id', user.id).single()
-
-      if (!userExists) {
-        if (user) {
-          token.id = user.id
-        }
-
-        const userData = {
-          username: token.name,
-          email: token.email,
-          image: token.picture,
-          user_id: token.id,
-        };
+    async jwt({ token, user }) {    
+      if (user) {
+        token.id      = user.id;
+        token.name    = user.name;
+        token.email   = user.email;
+        token.picture = user.image;
     
-        const { data: userCreated } = await supabase
-          .from('user')
-          .insert(userData)
-          .select('*');
-
-        if (userCreated) {
-          console.log(`${userCreated} user created`)
-        }
-        else {
-          console.log(`${userCreated} user create error`)
-        }
-
-        return {
-          id: token.id,
-          name: token.name,
-          email: token.email,
-          picture: token.picture,
+        const { data: userExists } = await supabase.from('user').select('*').eq('user_id', user.id).single();
+    
+        if (!userExists) {
+          const userData = {
+            username: user.name,
+            email:    user.email,
+            image:    user.image,
+            user_id:  user.id,
+          };
+    
+          const { data: userCreated } = await supabase.from('user').insert(userData).select('*');
+          console.log(userCreated ? `${userCreated} user created` : 'User  create error');
         }
       }
-
+    
       return {
-        id: userExists.id,
-        name: userExists.username,
-        email: userExists.email,
-        picture: userExists.image,
-      }
+        id:       token.id,
+        name:     token.name,
+        email:    token.email,
+        picture:  token.picture,
+      };
     },
 
     async session({session, token}) {
       if (token) {
-        session.user.id = token.id
-        session.user.name = token.name
-        session.user.email = token.email 
-        session.user.image = token.picture
+        session.user.id     = token.id
+        session.user.name   = token.name
+        session.user.email  = token.email 
+        session.user.image  = token.picture
       }
 
       return session
     },
 
     async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
       else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     }

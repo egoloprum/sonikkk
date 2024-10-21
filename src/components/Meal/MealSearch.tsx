@@ -4,74 +4,67 @@ import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import { FC, useEffect, useState } from 'react'
 import MealCard from './MealCard'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
 interface MealSearchProps {
   sessionId?: string
+  serverSearch?: string
+  serverResults: Meal[]
 }
 
-const MealSearch: FC<MealSearchProps> = () => {
-
+const MealSearch: FC<MealSearchProps> = ({
+  serverSearch, serverResults
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchResults, setSearchResults] = useState<Meal[]>()
   // const [searchPagination, setSearchPagination] = useState()
 
-  const searchParams = useSearchParams()
-  const searchQuery = (searchParams!.get('search') || '' ) as string
-
   const router = useRouter()
 
   useEffect(() => {
-    if (searchQuery.length) {
-      fetchSearchResults({"name": searchQuery})
-
+    if (serverResults && serverResults.length) {
+      setSearchResults(serverResults)
+    } else { setSearchResults([]) }
+    if (serverSearch?.length) {
+      setSearchInput(serverSearch)
     }
-  }, [searchQuery])
+  }, [])
 
   const fetchSearchResults = async (searchData: object) => {
     try {
       setIsLoading(true)
 
-      const response = await axios.post('/api/meal/all', searchData);
-      const results = response.data
+      // in the test
+      const endpoint = 'http://localhost:3000/api/meal/all'
+      // const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
 
-      console.log(results)
+      const response = await axios.post(endpoint, searchData);
+      const results = response.data
 
       if (!results.length) {
         toast.error("Nothing is found.")
       }
-
       setSearchResults(results)
 
-    } catch (error) {
+    } 
+    catch (error) {
       console.error(error)
       setSearchResults([])
-    }
-    finally {
-      setIsLoading(false)
-    }
+    } 
+    finally { setIsLoading(false) }
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    setSearchInput(searchInput.replace(/\s+/g, ''))
+    const sanitizedValue = searchInput.replace(/[^a-zA-Z\s]/g, '').replace(/\s+/g, ' ').trim();
+    setSearchInput(sanitizedValue)
 
-    if (!searchInput.replaceAll(' ', '')) {
-      console.log('L bozo')
-      return
-    }
-
-    if (searchInput) {
-      router.push(
-        `?search=${searchInput}`
-      )
-
-      fetchSearchResults({
-        "name": searchInput,
-      })
+    if (sanitizedValue && sanitizedValue.length) {
+      router.push(`?search=${sanitizedValue}`)
+      fetchSearchResults({ "name": sanitizedValue })
     }
   }
 
@@ -82,9 +75,7 @@ const MealSearch: FC<MealSearchProps> = () => {
 
           <label className="input input-bordered flex items-center gap-2 w-full max-w-[20rem]">
             <input
-              value={
-                searchInput ? searchInput : searchQuery
-              }
+              value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               type="text" className="grow" placeholder="Enter your meal..." 
             />
@@ -102,11 +93,9 @@ const MealSearch: FC<MealSearchProps> = () => {
 
           <button className="btn" type='submit'>Search</button>
         </div>
-
       </form>
 
       <div className='flex flex-col gap-8'>
-        
         {isLoading ? (
           <Loader2 className='animate-spin h-4 w-4' />
         ) : (
@@ -116,10 +105,9 @@ const MealSearch: FC<MealSearchProps> = () => {
             <>
               <div className='flex flex-col gap-6'>
                 {searchResults.map((mealDetail: Meal) => (
-                  <MealCard key={mealDetail.meal_id} mealDetail={mealDetail} />
+                  <MealCard whereRendered={true} key={mealDetail.meal_id} mealDetail={mealDetail} />
                 ))}
               </div>
-
 
               {/* <div className='border-4 border-red-400 w-full flex justify-center'>
                 <div className="join bg-red-500 flex w-full max-w-[40rem]">

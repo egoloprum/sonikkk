@@ -28,8 +28,6 @@ const MealDetail: FC<MealDetailProps> = ({
       const response = await axios.post('/api/meal/each', { "meal_id": meal_id })
       const responseData = response.data[0]
 
-      console.log(responseData)
-
       setSearchResult(responseData)
 
     } catch (error) {
@@ -108,7 +106,7 @@ const MealDetail: FC<MealDetailProps> = ({
             <div className='flex gap-4 flex-col lg:flex-row'>
 
               <div className='md:basis-4/5'>
-                <MealCard key={searchResult.meal_id} mealDetail={searchResult} />
+                <MealCard whereRendered={false} key={searchResult.meal_id} mealDetail={searchResult} />
               </div>
 
               <div 
@@ -141,7 +139,7 @@ const MealDetail: FC<MealDetailProps> = ({
                   searchResult.sections[0].components.map((ingredient: {raw_text: string}) => {
                     return(
                       <>
-                        <p className='my-2'>{ingredient.raw_text}</p>
+                        <p key={ingredient.raw_text} className='my-2'>{ingredient.raw_text}</p>
                       </>
                     )
                   })

@@ -3,7 +3,7 @@
 import { FC, useState } from 'react'
 import { signIn } from "next-auth/react"
 import toast from 'react-hot-toast'
-import { Loader2, LogIn } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 interface SignInProps {
   style: string
@@ -12,10 +12,9 @@ interface SignInProps {
 const SignIn: FC<SignInProps> = ({style}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  async function loginWithGoogle () {
-    setIsLoading(true)
-    
+  const loginWithGoogle = async () => {
     try {
+      setIsLoading(true)
       await signIn('google')
     }
     catch (error) {
@@ -32,7 +31,7 @@ const SignIn: FC<SignInProps> = ({style}) => {
     {isLoading ? (
       <Loader2 className='animate-spin h-4 w-4' />
       ) : (
-        <LogIn className='w-4 h-4' />
+        null
       )
     }
   </button>

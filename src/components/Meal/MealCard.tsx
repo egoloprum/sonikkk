@@ -6,14 +6,15 @@ import { FC } from 'react'
 interface MealCardProps {
   mealDetail: Meal
   key: string
+  whereRendered: boolean
 }
 
 const MealCard: FC<MealCardProps> = ({
-  mealDetail, key
+  mealDetail, key, whereRendered
 }) => {
 
   const meal_id = mealDetail.meal_id
-  const keywords = mealDetail.keywords?.split(', ') as string[]
+  const keywords = mealDetail.keywords?.split(', ').slice(0, 5) as string[]
 
 
   const handleSubmit = (index: string) => {
@@ -22,35 +23,42 @@ const MealCard: FC<MealCardProps> = ({
 
   return (
     <div onClick={() => handleSubmit(meal_id)} key={key} 
-      className='border-4 rounded-xl border-green-300 w-full flex flex-wrap lg:flex-nowrap md:flex-nowrap sm:flex-nowrap md:gap-4 gap-2 my-4'
+      className='border-4 rounded-xl border-green-300 w-full flex flex-wrap lg:flex-nowrap md:flex-nowrap sm:flex-nowrap my-4'
     >
-      <div className='md:basis-1/3 overflow-hidden rounded-s-lg md:max-w-[18rem] md:max-h-[18rem] aspect-square'>
+      <div className='lg:basis-1/3 sm:basis-1/2 overflow-hidden rounded-s-lg lg:max-w-[20rem] lg:max-h-[20rem] aspect-square'>
         <img src={mealDetail.thumbnail_url || ''} alt="food" 
           className='min-h-[15rem] min-w-[15rem] w-full h-full rounded-s-lg aspect-square hover:scale-110 transition duration-300' 
         />
       </div>
 
-      <div className='md:basis-2/3 flex flex-col w-full md:p-6 p-4 md:gap-6 gap-4'>
+      <div className='lg:basis-2/3 sm:basis-1/2 flex flex-col justify-center mx-auto w-full md:p-6 sm:p-4 p-2 md:gap-6 gap-4'>
         <div className='flex lg:flex-nowrap flex-wrap md:gap-6 gap-4'>
-          <div className='grow w-full flex flex-col justify-center gap-1'>
-            <Link href={`/generate-meal/${meal_id}`} 
+          <div className='grow w-full flex flex-col gap-1'>
+            {whereRendered ? (
+              <Link href={`/generate-meal/${meal_id}`} 
               className='hover:scale-105 hover:outline-dashed outline-2 outline-offset-4 
               rounded transition text-black text-xl sm:text-2xl md:text-3xl my-2'
-            >
-              {mealDetail.name}
-            </Link>
+              >
+                {mealDetail.name}
+              </Link>
+            ) : (
+              <p className='hover:scale-105 hover:outline-dashed outline-2 outline-offset-4 
+              rounded transition text-black text-xl sm:text-2xl md:text-3xl my-2'>{mealDetail.name}</p>
+            )}
 
-            <p className='flex justify-between gap-2 text-sm md:text-base'>
-              <span>Prepartion time in minutes</span>
-              <span className='font-bold'>{mealDetail.prep_time_minutes}</span>
-            </p>
-            <p className='flex justify-between gap-2 text-sm md:text-base'>
-              <span>Cook time in minutes</span>
-              <span className='font-bold'>{mealDetail.cook_time_minutes}</span>
-            </p>
+            <div className='mt-auto'>
+              <p className='flex justify-between gap-2 text-sm md:text-base'>
+                <span>Prepartion time in minutes</span>
+                <span className='font-bold'>{mealDetail.prep_time_minutes}</span>
+              </p>
+              <p className='flex justify-between gap-2 text-sm md:text-base'>
+                <span>Cook time in minutes</span>
+                <span className='font-bold'>{mealDetail.cook_time_minutes}</span>
+              </p>
+            </div>
           </div>
 
-          <div className='grow  w-full flex flex-col gap-1'>
+          <div className='grow w-full flex flex-col gap-1 justify-between'>
             {Object.keys(mealDetail.nutrition).filter((key) => key !== 'updated_at').map((key) => (
               <p key={key} className='flex justify-between gap-2 text-sm md:text-base'>
                 <span>{key}</span>
@@ -60,9 +68,9 @@ const MealCard: FC<MealCardProps> = ({
           </div>
         </div>
 
-        <div className='flex flex-wrap md:gap-4 gap-2'>
+        <div className='flex flex-wrap md:gap-4 md:gap-2 gap-1 mt-auto lg:mt-0'>
           {keywords?.filter((keyword) => keyword !== "").map((keyword: string) => (
-            <p key={keyword} className='border-2 rounded px-2 py-1 font-medium text-sm md:text-base'>{keyword}</p>
+            <p key={keyword} className='border-2 rounded px-2 py-1 font-medium text-xs sm:text-sm md:text-base'>{keyword}</p>
           ))}
         </div>
 

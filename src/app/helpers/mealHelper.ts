@@ -58,10 +58,12 @@ export const MealSelector = async ( mealsLiked: {meal_id: string}[] ) => {
 }
 
 export const MealSelectAll = async (keyword: string) => {
-  const {data, error} = await supabase
-    .from('meal')
-    .select('*')
-    .eq('name', keyword) as QueryData<{ data: Meal[] }>
+  const { data, error } = await supabase.rpc('search_meal', { search_term: keyword }) as QueryData<{ data: Meal[] }>
+
+  // const {data, error} = await supabase
+  //   .from('meal')
+  //   .select('*')
+  //   .eq('name', keyword) as QueryData<{ data: Meal[] }>
 
   if (error) {
     return null

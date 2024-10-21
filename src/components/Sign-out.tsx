@@ -1,34 +1,43 @@
 "use client"
 
-import { Loader2, LogOut } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { signOut } from 'next-auth/react'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import toast from 'react-hot-toast'
 
-const SignOut = () => {
+interface SignOutProps {
+  className?: string
+  role?:      string
+  tabIndex?:  number
+  id?:        string
+  children:   React.ReactNode
+}
+
+const SignOut: FC<SignOutProps> = ({ children }) => {
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false)
 
+  const handleSubmit = async () => {
+    setIsSigningOut(true)
+    try {
+      await signOut()
+    } catch (error) {
+      console.log(error)
+      toast.error("There was a problem signing out")
+    }
+    finally {
+      setIsSigningOut(false)
+    }
+  }
 
   return (
-    <button className='flex gap-2 items-center justify-center w-full' 
-      onClick={async () => {
-        setIsSigningOut(true)
-        try {
-          await signOut()
-        } catch (error) {
-          console.log(error)
-          toast.error("There was a problem signing out")
-        }
-        finally {
-          setIsSigningOut(false)
-        }
-      }}
+    <button className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 w-full flex items-center gap-2' 
+      onClick={handleSubmit}
     >
-      <span className='text-center'>Signout</span>
+      <span className=''>{children}</span>
       {isSigningOut ? (
         <Loader2 className='animate-spin h-4 w-4' />
         ) : (
-          <LogOut className='w-4 h-4' />
+          null
         )
       }
     </button>

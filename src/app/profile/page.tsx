@@ -9,10 +9,10 @@ const page = async ({}) => {
 
   if (!session) { notFound() }
 
-  const mealsLikedID = await MealIDByUser(session.user.id)
-  const mealsLiked = await MealSelector(mealsLikedID)
+  const mealsLikedID  = await MealIDByUser(session.user.id)
+  const mealsLiked    = await MealSelector(mealsLikedID)
 
-  // {console.log(mealsLiked)}
+  console.log(session.user)
 
   return (
 
@@ -24,7 +24,7 @@ const page = async ({}) => {
 
         <div className='grid'>
           {mealsLiked.flat().map((meal: Meal) => (
-            <MealCard key={meal.meal_id} mealDetail={meal} />
+            <MealCard whereRendered={true} key={meal.meal_id} mealDetail={meal} />
           ))}
         </div>
       </div>
