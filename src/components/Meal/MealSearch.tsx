@@ -37,8 +37,8 @@ const MealSearch: FC<MealSearchProps> = ({
       setIsLoading(true)
 
       // in the test
-      const endpoint = 'http://localhost:3000/api/meal/all'
-      // const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
+      // const endpoint = 'http://localhost:3000/api/meal/all'
+      const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
 
       const response = await axios.post(endpoint, searchData);
       const results = response.data

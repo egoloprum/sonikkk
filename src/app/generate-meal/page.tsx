@@ -14,8 +14,8 @@ const page = async ({
   const search = searchParams.search
 
   // in the test
-  const endpoint = 'http://localhost:3000/api/meal/all'
-  // const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
+  // const endpoint = 'http://localhost:3000/api/meal/all'
+  const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
 
   let results = []
 
