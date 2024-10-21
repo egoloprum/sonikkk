@@ -5,15 +5,10 @@ import { Loader2 } from 'lucide-react'
 import { FC, useEffect, useState } from 'react'
 import MealCard from './MealCard'
 import { useRouter, useSearchParams } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 interface MealSearchProps {
   sessionId?: string
-}
-
-interface SearchResultProps {
-  results: {
-    [key: string]: string;
-  }[];
 }
 
 const MealSearch: FC<MealSearchProps> = ({
@@ -22,7 +17,7 @@ const MealSearch: FC<MealSearchProps> = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState<string>('')
-  const [searchResults, setSearchResults] = useState<SearchResultProps>({ results: [] })
+  const [searchResults, setSearchResults] = useState<Meal[]>()
   const [searchPagination, setSearchPagination] = useState()
 
   const searchParams = useSearchParams()
@@ -41,14 +36,20 @@ const MealSearch: FC<MealSearchProps> = ({
     try {
       setIsLoading(true)
 
-      const response = await axios.post('/api/v2/meal/all', searchData);
+      const response = await axios.post('/api/meal/all', searchData);
       const results = response.data
+
+      console.log(results)
+
+      if (!results.length) {
+        toast.error("Nothing is found.")
+      }
 
       setSearchResults(results)
 
     } catch (error) {
       console.error(error)
-      setSearchResults({ results: [] })
+      setSearchResults([])
     }
     finally {
       setIsLoading(false)
@@ -78,7 +79,7 @@ const MealSearch: FC<MealSearchProps> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='border-4 border-red-200 py-2 flex flex-col gap-4 mb-4'>
+      <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-4 mb-4'>
         <div className='flex flex-wrap md:flex-nowrap lg:flex-wrap xl:flex-nowrap justify-center align-center gap-4'>
 
           <label className="input input-bordered flex items-center gap-2 w-full max-w-[20rem]">
@@ -104,148 +105,6 @@ const MealSearch: FC<MealSearchProps> = ({
           <button className="btn" type='submit'>Search</button>
         </div>
 
-        <div className='flex flex-wrap md:flex-nowrap lg:flex-wrap xl:flex-nowrap justify-center align-center gap-4 px-4'>
-
-          <div className="dropdown w-full max-w-[10rem]">
-            <div tabIndex={0} role="button" className="btn m-1 w-full rounded">Calories</div>
-            <ul tabIndex={0} className="dropdown-content bg-base-100 rounded z-[1] w-40 p-2 shadow flex flex-col gap-2">
-              <li className='flex flex-row w-full gap-4 justify-center'>
-                <span className='underline underline-offset-4 decoration-2 text-sm self-center'>From</span>
-                <input className='pl-1 ml-auto w-full max-w-[5rem] outline-none border-2 rounded' type="number" min='0' max='10000' />
-              </li>
-              <li className='flex flex-row w-full gap-4'>
-                <span className='underline underline-offset-4 decoration-2 text-sm self-center'>To</span>
-                <input className='pl-1 ml-auto w-full max-w-[5rem] outline-none border-2 rounded' type="number" min='0' max='10000' />
-              </li>
-            </ul>
-          </div>
-
-          <div className="dropdown w-full max-w-[10rem]">
-            <div tabIndex={0} role="button" className="btn m-1 w-full rounded">Ingredients</div>
-            <ul tabIndex={0} className="dropdown-content bg-base-100 rounded z-[1] w-44 p-2 shadow flex flex-col gap-2">
-              <li className='flex flex-row w-full gap-4 justify-center'>
-                <span className='underline underline-offset-4 decoration-2 text-sm self-center'>Up to</span>
-                <input className='pl-1 ml-auto w-full max-w-[5rem] outline-none border-2 rounded' type="number" min='0' max='20' />
-              </li>
-            </ul>
-          </div>
-
-          <div className="dropdown w-full max-w-[10rem]">
-            <div tabIndex={0} role="button" className="btn m-1 w-full rounded">Diet</div>
-            <ul tabIndex={0} className="dropdown-content bg-base-100 rounded z-[1] w-[24rem] p-2 shadow grid grid-cols-2 gap-2">
-              <div onClick={() => console.log("helllooooo")} className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2 text-sm'>Vegetarian</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Vegan</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Paleo</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>High-Fiber</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>High-Protein</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Low-Carb</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Low-Fat</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Low-Sodium</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-              <span className='underline underline-offset-4 decoration-2'>Low-Sugar</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-              <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Alcohol-Free</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-              <span className='underline underline-offset-4 decoration-2'>Balanced</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Immunity</span>
-              </div>
-            </ul>
-          </div>
-
-          <div className="dropdown w-full max-w-[10rem]">
-            <div tabIndex={0} role="btn" className="btn m-1 w-full rounded">Allergies</div>
-            <ul tabIndex={0} className="dropdown-content bg-base-100 rounded z-[1] w-[18rem] p-2 shadow grid grid-cols-2 gap-2">
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2 text-sm'>Gluten</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Dairy</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Eggs</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Soy</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Wheat</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Fish</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Shellfish</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-                <span className='underline underline-offset-4 decoration-2'>Tree nuts</span>
-              </div>
-
-              <div className="btn btn-ghost flex justify-start p-2">
-                <input type="checkbox" className="checkbox size-5" />
-              <span className='underline underline-offset-4 decoration-2'>Peanuts</span>
-              </div>
-            </ul>
-          </div>
-        </div>
-
       </form>
 
       <div className='flex flex-col gap-8'>
@@ -253,18 +112,18 @@ const MealSearch: FC<MealSearchProps> = ({
         {isLoading ? (
           <Loader2 className='animate-spin h-4 w-4' />
         ) : (
-          !searchResults.results.length ? (
+          !searchResults ? (
             <p>Nothing to show</p>
           ) : (
             <>
-              <div className='border-4 border-red-400 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
-                {searchResults.results.map((mealDetail: any) => (
+              <div className='flex flex-col gap-6'>
+                {searchResults.map((mealDetail: any) => (
                   <MealCard mealDetail={mealDetail} />
                 ))}
               </div>
 
 
-              <div className='border-4 border-red-400 w-full flex justify-center'>
+              {/* <div className='border-4 border-red-400 w-full flex justify-center'>
                 <div className="join bg-red-500 flex w-full max-w-[40rem]">
                   <button className="flex-1 join-item btn">1</button>
                   <button className="flex-1 join-item btn">2</button>
@@ -272,7 +131,7 @@ const MealSearch: FC<MealSearchProps> = ({
                   <button className="flex-1 join-item btn">99</button>
                   <button className="flex-1 join-item btn">100</button>
                 </div>
-              </div>
+              </div> */}
 
             </>
           )

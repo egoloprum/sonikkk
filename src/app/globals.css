@@ -15,8 +15,6 @@
 body {
   min-height: 100vh;
   margin: 0;
-  font-family: 'Corbel';
-  font-weight: 600;
 }
 
 @layer base {

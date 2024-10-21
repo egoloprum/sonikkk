@@ -1,13 +1,11 @@
+import { MealSelectAll } from "@/app/helpers/mealHelper"
+
 export async function POST(req: Request) {
   try {
-    const { mealId } = await req.json()
-    const response = await fetch(
-      `https://www.edamam.com/api/recipes/v2/${mealId}?type=public`
-    )
-    
-    const data = await response.json()
+    const body = await req.json()
+    const response = await MealSelectAll(body.name)
 
-    return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify(response), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'
@@ -16,7 +14,12 @@ export async function POST(req: Request) {
 
   } catch (error) {
     console.log(error)
+
     return new Response('Invalid request', { status: 400 })
   }
   finally {}
 }
+
+
+
+

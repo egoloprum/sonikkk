@@ -1,4 +1,4 @@
-import { MealExists, MealLikeRemove } from "@/app/helpers/mealHelper";
+import { MealLikeRemove } from "@/app/helpers/mealHelper";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
@@ -12,12 +12,6 @@ export async function POST(req: Request) {
     }
 
     const meal = await req.json()
-    const mealExists = await MealExists(meal.id)
-
-    if (!mealExists) {
-      return new Response("Invalid request", {status: 400})
-    }
-
     const mealRemoved = await MealLikeRemove(session.user.id, meal.id)
 
     return new Response(
