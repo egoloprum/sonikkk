@@ -12,7 +12,7 @@ export default async function Home() {
       {!session ? (
         <div>go login</div>
       ) : (
-        <div>go logout</div>
+        <div>Welcome</div>
       ) }
       
     </div>
