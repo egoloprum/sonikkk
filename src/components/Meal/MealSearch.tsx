@@ -11,10 +11,11 @@ interface MealSearchProps {
   sessionId?: string
   serverSearch?: string
   serverResults: Meal[]
+  isProduction: boolean
 }
 
 const MealSearch: FC<MealSearchProps> = ({
-  serverSearch, serverResults
+  serverSearch, serverResults, isProduction
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState<string>('')
@@ -36,9 +37,14 @@ const MealSearch: FC<MealSearchProps> = ({
     try {
       setIsLoading(true)
 
-      // in the test
-      // const endpoint = 'http://localhost:3000/api/meal/all'
-      const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
+      let endpoint = '';
+    
+      if (isProduction) {
+        endpoint = 'http://localhost:3000/api/meal/all'
+      }
+      else {
+        endpoint = 'https://sonikkk.vercel.app/api/meal/all'
+      }
 
       const response = await axios.post(endpoint, searchData);
       const results = response.data

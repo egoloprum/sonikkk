@@ -12,13 +12,17 @@ const page = async ({
 } : {searchParams: SearchParams} ) => {
   const session = await getServerSession(authOptions)
   const search = searchParams.search
+  const isProduction = process.env.PRODUCTION_OR_DEVELOPMENT === 'production'
+  let endpoint = '';
 
-  // in the test
-  // const endpoint = 'http://localhost:3000/api/meal/all'
-  const endpoint = 'https://sonikkk.vercel.app/api/meal/all'
+  if (isProduction) {
+    endpoint = 'http://localhost:3000/api/meal/all'
+  }
+  else {
+    endpoint = 'https://sonikkk.vercel.app/api/meal/all'
+  }
 
   let results = []
-
   if (search && search.length) {
     const response = await axios.post(endpoint, {"name": search})
     results = response.data
@@ -26,7 +30,7 @@ const page = async ({
 
   return (
     <div className='flex flex-col justify-center'>
-      <MealSearch sessionId={session?.user.id} serverSearch={search} serverResults={results} />
+      <MealSearch sessionId={session?.user.id} serverSearch={search} serverResults={results} isProduction={isProduction} />
     </div>
   )
 }
