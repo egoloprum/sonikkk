@@ -7,15 +7,21 @@ export const MealLikeAdd = async (user_id: string, meal_id: string) => {
     user_id: user_id
   }
 
+  const {data: likedAlready} = await supabase
+    .from('likedMeal')
+    .select('meal_id,user_id')
+    .eq('meal_id', meal_id)
+    .eq('user_id', user_id)
+    .single()
+
+  if (likedAlready) { return null }
+
   const { error } = await supabase
     .from('likedMeal')
     .insert(likedMealData)
     .select('*') as QueryData<{ mealLiked: object }[]>
 
-  if (error) {
-    return null
-  }
-
+  if (error) { return null }
   return true
 } 
 
@@ -26,10 +32,7 @@ export const MealLikeRemove = async (user_id: string, meal_id: string) => {
     .eq('meal_id', meal_id)
     .eq('user_id', user_id)
 
-  if (error) {
-    return null
-  }
-
+  if (error) { return null }
   return true
 }
 
@@ -58,17 +61,10 @@ export const MealSelector = async ( mealsLiked: {meal_id: string}[] ) => {
 }
 
 export const MealSelectAll = async (keyword: string) => {
-  const { data, error } = await supabase.rpc('search_meal', { search_term: keyword }) as QueryData<{ data: Meal[] }>
+  const { data, error } = await supabase
+    .rpc('search_meal', { search_term: keyword }) as QueryData<{ data: Meal[] }>
 
-  // const {data, error} = await supabase
-  //   .from('meal')
-  //   .select('*')
-  //   .eq('name', keyword) as QueryData<{ data: Meal[] }>
-
-  if (error) {
-    return null
-  }
-
+  if (error) { return null }
   return data as Meal[]
 }
 
@@ -78,10 +74,7 @@ export const MealSelectDetail = async (meal_id: string) => {
     .select('*')
     .eq('meal_id', meal_id) as QueryData<{ data: Meal }>
 
-  if (error) {
-    return null
-  }
-
+  if (error) { return null }
   return data as Meal
 }
 

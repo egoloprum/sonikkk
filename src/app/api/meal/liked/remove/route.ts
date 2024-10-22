@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     const meal = await req.json()
-    const mealRemoved = await MealLikeRemove(session.user.id, meal.id)
+    const mealRemoved = await MealLikeRemove(session.user.id, meal.meal_id)
 
     return new Response(
       mealRemoved ? 

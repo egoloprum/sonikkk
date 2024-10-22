@@ -19,10 +19,10 @@ const page = async ({}) => {
     <div>
       {session.user.name}
 
-      <div className='border-4 border-yellow-500 p-4'>
-        <p>Meals you liked: </p>
+      <div className=''>
+        <p className='my-4'>Meals you liked: </p>
 
-        <div className='grid'>
+        <div className='grid gap-4'>
           {mealsLiked.flat().map((meal: Meal) => (
             <MealCard whereRendered={true} key={meal.meal_id} mealDetail={meal} />
           ))}

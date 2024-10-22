@@ -23,11 +23,11 @@ const MealCard: FC<MealCardProps> = ({
 
   return (
     <div onClick={() => handleSubmit(meal_id)} key={key} 
-      className='border-4 rounded-xl border-green-300 w-full flex flex-wrap lg:flex-nowrap md:flex-nowrap sm:flex-nowrap my-4'
+      className='border-4 rounded-xl border-green-300 w-full flex flex-wrap lg:flex-nowrap md:flex-nowrap sm:flex-nowrap'
     >
-      <div className='lg:basis-1/3 sm:basis-1/2 overflow-hidden rounded-s-lg lg:max-w-[20rem] lg:max-h-[20rem] aspect-square'>
+      <div className='lg:basis-1/3 sm:basis-1/2 overflow-hidden rounded-t-lg sm:rounded-s-lg sm:rounded-t-none lg:max-w-[20rem] lg:max-h-[20rem] aspect-square'>
         <img src={mealDetail.thumbnail_url || ''} alt="food" 
-          className='min-h-[15rem] min-w-[15rem] w-full h-full rounded-s-lg aspect-square hover:scale-110 transition duration-300' 
+          className='min-h-[15rem] min-w-[15rem] object-contain w-full h-full rounded-t-lg sm:rounded-s-lg sm:rounded-t-none aspect-square hover:scale-110 transition duration-300' 
         />
       </div>
 
