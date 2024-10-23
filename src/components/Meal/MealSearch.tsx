@@ -153,17 +153,17 @@ const MealSearch: FC<MealSearchProps> = ({
                 ))}
               </div>
 
-              <div className='flex justify-center gap-4 max-w-[25rem] w-full place-self-center'>
-                <button className='border-2 border-black py-2 px-1 hover:bg-gray-200 focus:bg-gray-200 basis-2/5' 
+              <div className='flex justify-center gap-2 sm:gap-4 max-w-[15rem] sm:max-w-[25rem] w-full place-self-center text-xs sm:text-sm md:text-base'>
+                <button className='border-2 border-black py-1 sm:py-2 px-1 hover:bg-gray-200 focus:bg-gray-200 basis-2/5' 
                   onClick={handlePreviousPage} disabled={currentPage === 1}
                 >
                   Previous
                 </button>
-                <div className='border-2 border-black p-2 basis-1/5 flex justify-center gap-4'>
+                <div className='border-2 p-1 sm:p-2 basis-1/5 flex justify-center gap-4'>
                   <span>{currentPage}</span>
                   <span>{totalPages}</span>
                 </div>
-                <button className='border-2 border-black py-2 px-1 hover:bg-gray-200 focus:bg-gray-200 basis-2/5' 
+                <button className='border-2 border-black py-1 sm:py-2 px-1 hover:bg-gray-200 focus:bg-gray-200 basis-2/5' 
                   onClick={handleNextPage} disabled={currentPage === totalPages}
                 >
                   Next
