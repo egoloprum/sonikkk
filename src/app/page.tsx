@@ -8,13 +8,9 @@ export default async function Home() {
 
   return (
     <div className="">
-      
-      {!session ? (
-        <div>go login</div>
-      ) : (
-        <div>Welcome</div>
-      ) }
-      
+      {!session ? (<div className="text-xs sm:text-sm md:text-base">go login</div>) 
+        : (<div className="text-xs sm:text-sm md:text-base">Welcome</div>)
+      }
     </div>
   );
 }

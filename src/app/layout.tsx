@@ -25,9 +25,8 @@ export default function RootLayout({
       <body className={bangers.className}>
         <CompNavbar />
         <main className="flex justify-center">
-          <div className="max-w-[1200px] p-4 w-full border-4 border-indigo-400">
+          <div className="max-w-[1200px] p-4 w-full">
             <Providers>{children}</Providers>
-
           </div>
         </main>
       </body>

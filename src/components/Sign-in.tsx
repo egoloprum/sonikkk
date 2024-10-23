@@ -13,27 +13,14 @@ const SignIn: FC<SignInProps> = ({style}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const loginWithGoogle = async () => {
-    try {
-      setIsLoading(true)
-      await signIn('google')
-    }
-    catch (error) {
-      console.log(error)
-      toast.error('Something went wrong with your login.')
-    } 
-    finally {
-      setIsLoading(false)
-    }
+    try { setIsLoading(true); await signIn('google') }
+    catch (error) { console.log(error); toast.error('Something went wrong with your login.') } 
+    finally { setIsLoading(false) }
   } 
 
   return <button onClick={loginWithGoogle} className={style}>
     <span className='text-md'>Login</span>
-    {isLoading ? (
-      <Loader2 className='animate-spin h-4 w-4' />
-      ) : (
-        null
-      )
-    }
+    { isLoading ? (<Loader2 className='animate-spin h-4 w-4' />) : ( null ) }
   </button>
 }
 

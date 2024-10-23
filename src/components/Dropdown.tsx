@@ -56,7 +56,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ image }) => {
         >
           <Link
             href="/profile"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+            className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-200"
             role="menuitem"
             tabIndex={1}
             id="user-menu-item-0"
@@ -67,7 +67,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ image }) => {
           <hr />
           <Link
             href="/followers"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+            className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-200"
             role="menuitem"
             tabIndex={1}
             id="user-menu-item-0"
@@ -77,7 +77,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ image }) => {
           </Link>
           <Link
             href="settings"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+            className="block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-200"
             role="menuitem"
             tabIndex={1}
             id="user-menu-item-1"

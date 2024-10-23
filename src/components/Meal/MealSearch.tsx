@@ -95,12 +95,8 @@ const MealSearch: FC<MealSearchProps> = ({
         setCurrentPage(newPage)
         setTotalPages(totalPage)
         router.push(`/generate-meal?search=${searchInput}&page=${newPage}&totalPages=${totalPage}`)
-      } 
-      catch (error) {
-        console.error(error)
-        setSearchResults([])
-      } 
-
+      }
+      catch (error) { console.error(error); setSearchResults([]) } 
     })
   }
 
@@ -118,10 +114,9 @@ const MealSearch: FC<MealSearchProps> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-4 mb-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col sm:mb-6 sm:mt-2 mb-4'>
         <div className='flex flex-wrap md:flex-nowrap lg:flex-wrap xl:flex-nowrap justify-center align-center gap-4'>
-
-          <label className="input input-bordered flex items-center gap-2 w-full max-w-[20rem]">
+          <label className="input input-bordered flex items-center gap-2 w-full sm:max-w-[20rem] text-sm sm:text-base">
             <input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
@@ -138,20 +133,21 @@ const MealSearch: FC<MealSearchProps> = ({
                 clipRule="evenodd" />
             </svg>
           </label>
-
-          <button className="btn" type='submit'>Search</button>
+          {/* <button className="btn" type='submit'>Search</button> */}
         </div>
       </form>
 
-      <div className='flex flex-col gap-8'>
+      <div className='flex flex-col gap-4 sm:gap-6 md:gap-8'>
         {isLoading ? (
-          <Loader2 className='animate-spin h-4 w-4' />
+          <div className='flex justify-center'>
+            <Loader2 className='animate-spin h-8 w-8' />
+          </div>
         ) : (
           !paginatedResults() || !paginatedResults().length ? (
-            <p>Nothing to show</p>
+            <p className='text-xs sm:text-sm md:text-base'>Nothing to show</p>
           ) : (
             <>
-              <div className='flex flex-col gap-6'>
+              <div className='flex flex-col gap-2 sm:gap-4 md:gap-6'>
                 {paginatedResults().map((mealDetail: Meal) => (
                   <MealCard whereRendered={true} key={mealDetail.meal_id} mealDetail={mealDetail} />
                 ))}

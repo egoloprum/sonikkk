@@ -22,17 +22,11 @@ export async function POST(req: Request) {
     const mealLiked = await MealLikeAdd(session.user.id, meal_id)
 
     return new Response(
-      mealLiked ? 
-        "OK" : 
-        "Invalid request",
-      {
-        status: mealLiked ? 200 : 400
-      }
+      mealLiked ? "OK" : "Invalid request", { status: mealLiked ? 200 : 400 }
     )
 
   } catch (error) {
     console.log(error)
-
     return new Response('Invalid request', { status: 400 })
   }
 }

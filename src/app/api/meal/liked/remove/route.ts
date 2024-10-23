@@ -15,17 +15,11 @@ export async function POST(req: Request) {
     const mealRemoved = await MealLikeRemove(session.user.id, meal.meal_id)
 
     return new Response(
-      mealRemoved ? 
-        "OK" : 
-        "Invalid request",
-      {
-        status: mealRemoved ? 200 : 400
-      }
+      mealRemoved ? "OK" : "Invalid request", { status: mealRemoved ? 200 : 400 }
     )
 
   } catch (error) {
     console.log(error)
-
     return new Response('Invalid request', { status: 400 })
   }
 }

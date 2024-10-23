@@ -18,28 +18,17 @@ const SignOut: FC<SignOutProps> = ({ children }) => {
 
   const handleSubmit = async () => {
     setIsSigningOut(true)
-    try {
-      await signOut()
-    } catch (error) {
-      console.log(error)
-      toast.error("There was a problem signing out")
-    }
-    finally {
-      setIsSigningOut(false)
-    }
+    try { await signOut() } 
+    catch (error) { console.log(error); toast.error("There was a problem signing out") }
+    finally { setIsSigningOut(false) }
   }
 
   return (
-    <button className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 w-full flex items-center gap-2' 
+    <button className='block px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-200 w-full flex items-center gap-2' 
       onClick={handleSubmit}
     >
       <span className=''>{children}</span>
-      {isSigningOut ? (
-        <Loader2 className='animate-spin h-4 w-4' />
-        ) : (
-          null
-        )
-      }
+      { isSigningOut ? (<Loader2 className='animate-spin h-4 w-4' />) : (null) }
     </button>
   )
 }
