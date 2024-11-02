@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState, useRef, useEffect, FC } from 'react'
-import SignOut from './Sign-out'
 
 interface DropdownMenuProps {
   image: string | null | undefined
@@ -86,13 +85,13 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ image }) => {
             Settings
           </Link>
           <hr />
-          <SignOut
+          {/* <SignOut
             role="menuitem"
             tabIndex={1}
             id="user-menu-item-2"
           >
             Sign out
-          </SignOut>
+          </SignOut> */}
         </div>
       )}
     </div>

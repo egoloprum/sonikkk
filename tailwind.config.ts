@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 
+
 const config: Config = {
     darkMode: ["class"],
     content: [
@@ -57,11 +58,6 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		}
   	}
-  },
-  plugins: [require("tailwindcss-animate"), require('daisyui'),],
-
-  daisyui: {
-    themes: ["light", "dark", "cupcake"],
   },
 };
 export default config;

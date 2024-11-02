@@ -68,6 +68,14 @@ export const MealSelectAll = async (keyword: string) => {
   return data as Meal[]
 }
 
+export const MealPaginator = async (page: number, meals_search: Meal[]) => {
+  const { data, error } = await supabase
+    .rpc('paginate_meal', { page: page, meal_search: meals_search }) as QueryData<{ data: Meal[] }>
+
+  if (error) { return [] }
+  return data as Meal[]
+}
+
 export const MealSelectDetail = async (meal_id: string) => {
   const {data, error} = await supabase
     .from('meal')

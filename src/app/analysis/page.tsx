@@ -1,5 +1,5 @@
 const page = ({}) => {
-  return <div>plan</div>
+  return <div>Analysis</div>
 }
 
 export default page
