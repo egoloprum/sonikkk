@@ -3,13 +3,14 @@
 import { FC, useState } from 'react'
 import { signIn } from "next-auth/react"
 import toast from 'react-hot-toast'
-import { Loader2 } from 'lucide-react'
+import { Loader2, LogIn } from 'lucide-react'
 
 interface SignInProps {
-  style: string
+  className?: string
+  children:   React.ReactNode
 }
 
-const SignIn: FC<SignInProps> = ({style}) => {
+const SignIn: FC<SignInProps> = ({className, children}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const loginWithGoogle = async () => {
@@ -18,10 +19,13 @@ const SignIn: FC<SignInProps> = ({style}) => {
     finally { setIsLoading(false) }
   } 
 
-  return <button onClick={loginWithGoogle} className={style}>
-    <span className='text-md'>Login</span>
-    { isLoading ? (<Loader2 className='animate-spin h-4 w-4' />) : ( null ) }
-  </button>
+  return (
+    <button onClick={loginWithGoogle} className={className}>
+      <LogIn />
+      <span className=''>{children}</span>
+      { isLoading ? (<Loader2 className='animate-spin h-4 w-4' />) : ( null ) }
+    </button>
+  )
 }
 
 export default SignIn

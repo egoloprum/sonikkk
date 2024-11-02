@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Search } from 'lucide-react'
 import { FC, useEffect, useState, useTransition } from 'react'
 import MealCard from './MealCard'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -114,30 +114,21 @@ const MealSearch: FC<MealSearchProps> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='flex flex-col sm:mb-6 sm:mt-2 mb-4'>
-        <div className='flex flex-wrap md:flex-nowrap lg:flex-wrap xl:flex-nowrap justify-center align-center gap-4'>
-          <label className="input input-bordered flex items-center gap-2 w-full sm:max-w-[20rem] text-sm sm:text-base">
-            <input
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              type="text" className="grow" placeholder="Enter your meal..." 
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70">
-              <path
-                fillRule="evenodd"
-                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                clipRule="evenodd" />
-            </svg>
-          </label>
-          {/* <button className="btn" type='submit'>Search</button> */}
+      <form onSubmit={handleSubmit} className='flex justify-center'>
+        <div className="border-2 rounded border-gray-300 focus-within:border-gray-500 relative">
+          <input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            type="text" className="px-4 py-2 mr-6 outline-none w-full dark:bg-[#201c1c] bg-[#fffcfc]" placeholder="Enter your meal..." 
+          />
+
+          <Search className='absolute top-2 right-2' />
         </div>
+          {/* <button className="btn" type='submit'>Search</button> */}
+
       </form>
 
-      <div className='flex flex-col gap-4 sm:gap-6 md:gap-8'>
+      <div className='flex flex-col py-4 gap-4 sm:gap-6 md:gap-8'>
         {isLoading ? (
           <div className='flex justify-center'>
             <Loader2 className='animate-spin h-8 w-8' />

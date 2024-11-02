@@ -48,32 +48,26 @@ const CompSidebar:FC<CompSidebarProps> = ({
   }
 
   return (
-    <div className={` ${ isExpanded ? 'max-w-72' : 'max-w-24' } w-full z-40 transition-width duration-200`}>
-      <div className={`${ isExpanded ? 'w-72 overflow-y-auto scrollbar-hidden' : 'w-24' } py-2 border-r-2 border-[#d4e4ec] 
-        dark:border-[#1c1c1c] dark:bg-[#201c1c] bg-[#fffcfc] h-full fixed top-0 left-0 transition-width duration-200`}
+    <div className={` ${ isExpanded ? 'max-w-72' : 'max-w-28' } sm:w-full z-40 transition-width duration-200`}>
+      <div className={`${ isExpanded ? 'sm:w-72 overflow-y-auto scrollbar-hidden h-screen' : 'sm:w-28' } py-2 sm:border-r-2 sm:border-[#d4e4ec] 
+        dark:border-[#1c1c1c] dark:bg-[#201c1c] bg-[#fffcfc] sm:h-full w-full fixed sm:top-0 sm:left-0 bottom-0 transition-width duration-200`}
       >
-
-      <div className={`relative h-16`}>
-        <p
-          onClick={expandSidebar} 
-          className={`absolute top-4 left-[28px] ring-2 p-2 rounded-full cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]`}
-        >
-          <Menu />
-        </p>
-        { isExpanded ? (
-          <p 
-            className='p-2 rounded-full cursor-pointer absolute top-4 right-4 dark:hover:bg-[#222224] hover:bg-[#f0f4f4] '
-            onClick={toggleTheme}
-          >
-            {isDarkMode ? (<Power />) : (<PowerOff />)}
-          </p>
-        ) : (
-          null
-        ) }
-      </div>
 
       { isExpanded ? (
         <div className='px-4'>
+          <div className='p-2 flex justify-between'>
+            <p onClick={expandSidebar} 
+              className={`border-2 p-2 rounded-full cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]`}
+            >
+              <Menu />
+            </p>
+            { isExpanded ? (
+              <p onClick={toggleTheme} 
+                className='p-2 rounded-full cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4] '
+              > {isDarkMode ? (<Power />) : (<PowerOff />)}
+              </p>
+            ) : (null) }
+          </div>
 
           {/* profile */}
           <div className='flex gap-2 items-center p-2 mt-4 select-none'>
@@ -83,10 +77,10 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
           {/* planner community discover */}
           <div className='flex flex-col mt-4'>
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            <Link href='/planner' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <CalendarRange />
               <span>Planner</span>
-            </p>
+            </Link>
             <Link href='/community' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <Users />
               <span>Community</span>
@@ -99,14 +93,14 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
           {/* custom-recipes collections */}
           <div className='flex flex-col mt-4'>
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            <Link href='/custom-recipes' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <CookingPot  />
               <span >Custom recipes</span>
-            </p>
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            </Link>
+            <Link href='/collections' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <Star  />
               <span className='my-auto'>Collections</span>
-            </p>
+            </Link>
           </div>
 
           {/* diet-nutritions stats weight settings */}
@@ -124,33 +118,33 @@ const CompSidebar:FC<CompSidebarProps> = ({
                 )}
               </p>
               <div className={`overflow-hidden transition-max-height duration-300 ease-in-out ${accord1 ? 'max-h-40 pl-4 pb-2' : 'max-h-0'}`}>
-                <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                <Link href='/nutrition' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Nutrition Targets</span>
-                </p>
-                <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                </Link>
+                <Link href='/diet' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Primary Diet</span>
-                </p>
-                <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                </Link>
+                <Link href='/exclusion' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Food Exclusions</span>
-                </p>
-                <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                </Link>
+                <Link href='/rated' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Rated Foods</span>
-                </p>
+                </Link>
               </div>
             </div>
 
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            <Link href='/stats' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <ChartNoAxesColumn />
               <span>Physical Stats</span>
-            </p>
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            </Link>
+            <Link href='/goal' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <Goal />
               <span>Weight and Goal</span>
-            </p>
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            </Link>
+            <Link href='/generator' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <SlidersVertical />
               <span>Generator Settings</span>
-            </p>
+            </Link>
           </div>
 
           {/* account help */}
@@ -168,23 +162,23 @@ const CompSidebar:FC<CompSidebarProps> = ({
                 )}
               </p>
               <div className={`overflow-hidden transition-max-height duration-300 ease-in-out ${accord2 ? 'max-h-40 pl-4 pb-2' : 'max-h-0'}`}>
-                <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                <Link href='/account/credentials' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Credentials</span>
-                </p>
-                <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                </Link>
+                <Link href='/account/notifications' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Notifications</span>
-                </p>
-                <Link href='followers' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
+                </Link>
+                <Link href='/account/followers' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]'>
                   <span>Followers</span>
                 </Link>
               </div>
             
             </div>
 
-            <p className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
+            <Link href='/help' className='p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-bold'>
               <CircleHelp />
               <span>Help</span>
-            </p>
+            </Link>
           </div>
 
           <div className='mt-4'>
@@ -195,28 +189,37 @@ const CompSidebar:FC<CompSidebarProps> = ({
           </div>
         </div>
       ) : (
-        <div className='relative px-2 mt-4 flex flex-col gap-8 h-full'>
-          <div className='flex flex-col gap-4'>
-            <p className='py-2 flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4] select-none text-sm font-bold rounded'>
-              <CalendarRange />
-              <span className='text-xs'>Planner</span>
+        <div className='px-2 mt-4 flex flex-col gap-8 h-full'>
+          <div className='flex sm:flex-col justify-between gap-4 px-2'>
+            <p onClick={expandSidebar} 
+              className='sm:border-2 order-last sm:order-first flex flex-col gap-2 sm:gap-0 w-full sm:justify-center items-center sm:p-2 py-2 rounded-full cursor-pointer 
+              dark:hover:bg-[#222224] hover:bg-[#f0f4f4] font-bold'
+            >
+              <Menu />
+              <span className='text-xs sm:hidden block'>Menu</span>
             </p>
 
-            <Link href='/community' className='py-2 flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-[#222224] 
+            <Link href='/planner' className='py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-[#222224] 
+              hover:bg-[#f0f4f4] select-none text-sm font-bold rounded'>
+              <CalendarRange />
+              <span className='text-xs'>Planner</span>
+            </Link>
+
+            <Link href='/community' className='py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-[#222224] 
               hover:bg-[#f0f4f4] select-none text-sm font-bold rounded'>
               <Users />
               <span className='text-xs'>Community</span>
             </Link>
 
-            <Link href='/generate-meal' className='py-2 flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4] select-none text-sm font-bold rounded'>
+            <Link href='/generate-meal' className='py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4] select-none text-sm font-bold rounded'>
               <Search />
               <span className='text-xs'>Discover</span>
             </Link>        
           </div>
 
-          <div className='p-2 absolute bottom-24 left-4 flex justify-center cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-boldrounded'>
+          <Link href='/planner' className='hidden p-2 w-full mt-auto mb-8 sm:flex justify-center cursor-pointer dark:hover:bg-[#222224] hover:bg-[#f0f4f4]  text-sm font-boldrounded'>
             <Apple className='w-12 h-12' />
-          </div>
+          </Link>
         </div>
       )}
       </div>

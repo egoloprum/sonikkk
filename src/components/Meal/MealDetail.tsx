@@ -111,7 +111,7 @@ const MealDetail: FC<MealDetailProps> = ({
 
             <div className='flex gap-4 flex-col md:flex-row'>
               <div className='basis-1/3 border-4 border-green-400 rounded-xl p-2 sm:p-4 font-medium'>
-                <p className='text-black text-base sm:text-xl md:text-2xl mb-2 sm:mb-4 underline'>Ingredients</p>
+                <p className='text-base sm:text-xl md:text-2xl mb-2 sm:mb-4 underline'>Ingredients</p>
 
                 { searchResult.sections ? (
                   searchResult.sections[0].components.map((ingredient: {raw_text: string}) => {
@@ -127,12 +127,12 @@ const MealDetail: FC<MealDetailProps> = ({
               </div>
 
               <div className='basis-1/3 border-4 border-green-400 rounded-xl p-2 sm:p-4 font-medium text-sm md:text-base'>
-                <p className='text-black text-base sm:text-xl md:text-2xl mb-4 underline'>Nutrients</p>
+                <p className='text-base sm:text-xl md:text-2xl mb-4 underline'>Nutrients</p>
 
               </div>
 
               <div className='basis-1/3 border-4 border-green-400 rounded-xl p-2 sm:p-4 font-medium text-sm md:text-base'>
-                <p className='text-black text-base sm:text-xl md:text-2xl mb-2 sm:mb-4 underline'>Instructions</p>
+                <p className='text-base sm:text-xl md:text-2xl mb-2 sm:mb-4 underline'>Instructions</p>
 
                 {searchResult.instructions ? (
                   searchResult.instructions.map((instruction) => (

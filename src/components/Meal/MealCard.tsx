@@ -37,13 +37,13 @@ const MealCard: FC<MealCardProps> = ({
             {whereRendered ? (
               <Link href={`/generate-meal/${meal_id}`} 
               className='hover:scale-105 hover:outline-dashed outline-2 outline-offset-4 
-              rounded transition text-black text-base sm:text-xl md:text-2xl my-2'
+              rounded transition font-bold text-base sm:text-xl md:text-2xl my-2'
               >
                 {mealDetail.name}
               </Link>
             ) : (
               <p className='hover:scale-105 hover:outline-dashed outline-2 outline-offset-4 
-              rounded transition text-black text-base sm:text-xl md:text-2xl my-2'>{mealDetail.name}</p>
+              rounded transition font-bold text-base sm:text-xl md:text-2xl my-2'>{mealDetail.name}</p>
             )}
 
             <div className='mt-auto flex flex-col gap-1'>
@@ -68,7 +68,7 @@ const MealCard: FC<MealCardProps> = ({
           </div>
         </div>
 
-        <div className='flex flex-wrap md:gap-4 md:gap-2 gap-1 mt-auto lg:mt-0'>
+        <div className='flex flex-wrap md:gap-4 sm:gap-2 gap-1 mt-auto lg:mt-0'>
           {keywords?.filter((keyword) => keyword !== "").map((keyword: string) => (
             <p key={keyword} className='border-2 rounded px-2 py-1 font-medium text-xs sm:text-sm md:text-base'>{keyword}</p>
           ))}

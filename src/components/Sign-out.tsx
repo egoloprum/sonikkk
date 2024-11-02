@@ -21,9 +21,7 @@ const SignOut: FC<SignOutProps> = ({ className, children }) => {
   }
 
   return (
-    <button className={className} 
-      onClick={handleSubmit}
-    >
+    <button className={className} onClick={handleSubmit}>
       <LogOut />
       <span className=''>{children}</span>
       { isSigningOut ? (<Loader2 className='animate-spin h-4 w-4' />) : (null) }
