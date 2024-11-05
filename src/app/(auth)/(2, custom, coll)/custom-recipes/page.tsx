@@ -15,7 +15,7 @@ const page = async ({}) => {
       <PageNavbar pageName="Custom Recipes" />
       <div className="pt-16 px-6 sm:px-8 md:px-10 lg:px-12">
         <div className="py-4 flex flex-col gap-4">
-          <p className="text-xs sm:text-sm md:text-base">Can't find your home-made meal? Create one below</p>
+          <p className="text-xs sm:text-sm md:text-base">Cant find your home-made meal? Create one below</p>
 
           <div className="">
             <div className="flex flex-col md:flex-row gap-4">
