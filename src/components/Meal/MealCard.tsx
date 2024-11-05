@@ -35,7 +35,7 @@ const MealCard: FC<MealCardProps> = ({
         <div className='flex lg:flex-nowrap flex-wrap md:gap-6 gap-4'>
           <div className='grow w-full flex flex-col gap-1'>
             {whereRendered ? (
-              <Link href={`/generate-meal/${meal_id}`} 
+              <Link href={`/meal/${meal_id}`} 
               className='hover:scale-105 hover:outline-dashed outline-2 outline-offset-4 
               rounded transition font-bold text-base sm:text-xl md:text-2xl my-2'
               >

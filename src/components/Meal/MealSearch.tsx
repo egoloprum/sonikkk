@@ -39,7 +39,7 @@ const MealSearch: FC<MealSearchProps> = ({
       const totalPage = Math.ceil(serverResults.length / itemsPerPage)
       setCurrentPage(newPage)
       setTotalPages(totalPage)
-      router.push(`/generate-meal?search=${serverSearch}&page=${newPage}&totalPages=${totalPage}`)
+      router.push(`/discover?search=${serverSearch}&page=${newPage}&totalPages=${totalPage}`)
     } else { setSearchResults([]) }
   }, [])
 
@@ -55,7 +55,7 @@ const MealSearch: FC<MealSearchProps> = ({
   const updatePaginationURL = (newPage: number, newTotalPages: number) => {
     // setIsLoading(true);
     setIsLoading(() => {
-      router.push(`/generate-meal?search=${searchInput}&page=${newPage}&totalPages=${newTotalPages}`);
+      router.push(`/discover?search=${searchInput}&page=${newPage}&totalPages=${newTotalPages}`);
     })
   };
 
@@ -94,7 +94,7 @@ const MealSearch: FC<MealSearchProps> = ({
         const totalPage = Math.ceil(results.length / itemsPerPage)
         setCurrentPage(newPage)
         setTotalPages(totalPage)
-        router.push(`/generate-meal?search=${searchInput}&page=${newPage}&totalPages=${totalPage}`)
+        router.push(`/discover?search=${searchInput}&page=${newPage}&totalPages=${totalPage}`)
       }
       catch (error) { console.error(error); setSearchResults([]) } 
     })
@@ -119,7 +119,7 @@ const MealSearch: FC<MealSearchProps> = ({
           <input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            type="text" className="px-4 py-2 mr-6 outline-none w-full dark:bg-[#201c1c] bg-[#fffcfc]" placeholder="Enter your meal..." 
+            type="text" className="px-4 py-2 mr-6 outline-none w-full dark:bg-black_extra bg-white_extra" placeholder="Enter your meal..." 
           />
 
           <Search className='absolute top-2 right-2' />

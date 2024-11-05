@@ -1,4 +1,5 @@
 import MealSearch from '@/components/Meal/MealSearch'
+import PageNavbar from '@/components/UI/PageNavbar'
 import { authOptions } from '@/lib/auth'
 import axios from 'axios'
 import { getServerSession } from 'next-auth'
@@ -28,14 +29,20 @@ const page = async ({
   }
 
   return (
-    <div className='flex flex-col justify-center'>
-      <MealSearch 
-        sessionId={session?.user.id} 
-        serverSearch={search} 
-        serverResults={results} 
-        isProduction={isProduction} 
-      />
-    </div>
+    <>
+      <PageNavbar pageName="Discover" />
+
+      <div className='pt-16 px-6 sm:px-8 md:px-10 lg:px-12 '>
+        <div className='py-4 gap-4 flex flex-col justify-center'>
+          <MealSearch 
+            sessionId={session?.user.id} 
+            serverSearch={search} 
+            serverResults={results} 
+            isProduction={isProduction} 
+          />
+        </div>
+      </div>
+    </>
   )
 }
 

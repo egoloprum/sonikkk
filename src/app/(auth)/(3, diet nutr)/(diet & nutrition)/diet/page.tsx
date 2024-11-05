@@ -10,11 +10,12 @@ const page = async ({}) => {
 
   return (
     <>
-      <PageNavbar pageName="Collections" />
+      <PageNavbar pageName="Primary Diet" />
       <div className="pt-16 px-6 sm:px-8 md:px-10 lg:px-12">
         <div className="py-4 flex flex-col gap-4">
-          <p className="text-xs sm:text-sm md:text-base">Make collections based on your feelings.</p>
-
+          <p className="text-xs sm:text-sm md:text-base">We'll base your meals off this main main diet type. 
+            Choose "Anything" to customize your own unique diet from scratch and set specific exclusions from the Exclusion
+          </p>
         </div>
       </div>
     </>
