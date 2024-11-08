@@ -1,6 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google"
 import { supabase } from "./supabase";
+import { createExclusion } from "@/app/helpers/exclusionHelper";
+import { createPrimaryDiet } from "@/app/helpers/dietHelper";
  
 function getGoogleCredentials() {
   const clientId = process.env.GOOGLE_CLIENT_ID
@@ -38,7 +40,7 @@ export const authOptions: NextAuthOptions = {
         token.picture = user.image;
     
         const { data: userExists } = await supabase.from('user').select('*').eq('user_id', user.id).single();
-    
+
         if (!userExists) {
           const userData = {
             username: user.name,
@@ -48,6 +50,8 @@ export const authOptions: NextAuthOptions = {
           };
     
           const { data: userCreated } = await supabase.from('user').insert(userData).select('*');
+          await createExclusion(user.id)
+          await createPrimaryDiet(user.id)
           console.log(userCreated ? `${userCreated} user created` : 'User  create error');
         }
       }

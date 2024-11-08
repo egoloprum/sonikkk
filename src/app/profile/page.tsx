@@ -29,7 +29,7 @@ const page = async ({}) => {
         </div>
       </div>
 
-      <div className='border-4 border-gray-500 p-4 mt-4'>
+      <div className='border-4 border-gray_border p-4 mt-4'>
         <p>Meals you added: </p>
       </div>
     </div>

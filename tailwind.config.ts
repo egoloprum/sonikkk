@@ -14,11 +14,13 @@ const config: Config = {
         black_extra: '#201c1c',
         black_mid: '#1e2020',
         black_hover: '#302c2c',
+        black_border: '#4b5563',
 
         white_extra: '#fffcfc',
         white_mid: '#d4e4ec',
         white_hover: '#f0f4f4',
         white_text: '#d6d8da',
+        white_border: '#e5e7eb',
 
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

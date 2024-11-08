@@ -51,16 +51,16 @@ const CompNavbar:FC<CompNavbarProps> = ({className}) => {
           {isOpen ? (
             <div className="sm:hidden flex flex-col gap-6 px-4 py-6 h-full">
               <Link href='/instruction' onClick={() => setIsOpen(false)} 
-                className="md:text-base sm:text-sm  rounded hover:bg-white_hover hover:underline flex items-center border-2 border-gray-300 p-2 select-none">
+                className="md:text-base sm:text-sm  rounded hover:bg-white_hover hover:underline flex items-center border-2 border-gray_border p-2 select-none">
                 <p className="font-bold">How it Works</p>
               </Link>
               <Link href='/discover' onClick={() => setIsOpen(false)} 
-                className="md:text-base sm:text-sm  rounded hover:bg-white_hover hover:underline flex items-center border-2 border-gray-300 p-2 select-none">
+                className="md:text-base sm:text-sm  rounded hover:bg-white_hover hover:underline flex items-center border-2 border-gray_border p-2 select-none">
                 <p className="font-bold">Browse Foods</p>
               </Link>
 
               <SignIn className="md:text-base sm:text-sm font-bold rounded hover:bg-white_hover hover:underline 
-                border-2 border-gray-300 p-2 select-none flex gap-2 items-center">Log in
+                border-2 border-gray_border p-2 select-none flex gap-2 items-center">Log in
               </SignIn>
             </div>
           ) : (null)}

@@ -115,7 +115,7 @@ const MealSearch: FC<MealSearchProps> = ({
   return (
     <>
       <form onSubmit={handleSubmit} className='flex justify-center'>
-        <div className="border-2 rounded border-gray-300 focus-within:border-gray-500 relative">
+        <div className="border-2 rounded border-gray-300 focus-within:border-gray_border relative">
           <input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}

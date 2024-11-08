@@ -12,3 +12,12 @@ interface likedMeal {
   id: string
 }
 
+interface Exclusion {
+  user_id: string 
+  list: string[]
+}
+
+interface PrimaryDiet {
+  user_id: string 
+  diet_type: string
+}

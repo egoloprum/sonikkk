@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import { notFound } from "next/navigation"
 
 const page = async ({}) => {
-  const session = getServerSession(authOptions)
+  const session = await getServerSession(authOptions)
 
   if (!session) {notFound()}
 
