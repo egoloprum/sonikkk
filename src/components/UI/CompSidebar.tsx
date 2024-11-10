@@ -75,7 +75,7 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
           {/* profile */}
           <div className='flex gap-2 items-center p-2 mt-4 select-none'>
-            <img src={profile.picture} className='rounded w-10 h-10' />
+            <img src={profile.picture} className='rounded w-10 h-10' alt={profile.username} />
             <p className=' font-bold'>{profile.username}</p>
           </div>
 

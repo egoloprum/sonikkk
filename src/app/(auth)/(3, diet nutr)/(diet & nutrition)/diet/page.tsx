@@ -1,4 +1,4 @@
-import { getPrimaryDiet } from "@/app/helpers/dietHelper"
+import { createPrimaryDiet, getPrimaryDiet } from "@/app/helpers/dietHelper"
 import DietClient from "@/components/Diet & Nutrition/DietClient"
 import PageNavbar from "@/components/UI/PageNavbar"
 import { authOptions } from "@/lib/auth"
@@ -14,7 +14,7 @@ const page = async ({}) => {
   const user_id = session.user.id
   const primaryDiet = await getPrimaryDiet(user_id) as PrimaryDiet
 
-  console.log(`diet type = ${primaryDiet.diet_type}`)
+  if (!primaryDiet) { await createPrimaryDiet(user_id) }
 
   return (
     <>

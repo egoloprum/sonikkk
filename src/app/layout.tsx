@@ -33,7 +33,7 @@ export default async function RootLayout({
         ) : (
           <CompSidebar profile={{picture: session.user.image!, username: session.user.name! }} />
         ) }
-        <main className={`${ !session ? 'flex justify-center' : 'mb-32 sm:mb-0' } w-full`}>
+        <main className={`${ !session ? 'flex justify-center' : 'mb-20 sm:mb-0' } w-full`}>
           <div className={`${ !session ? 'max-w-[1000px] px-4' : '' } w-full`}>
             <Providers>{children}</Providers>
           </div>

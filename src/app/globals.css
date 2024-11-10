@@ -26,6 +26,21 @@ body {
   scrollbar-width: none; /* Hide scrollbar for Firefox */
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the spinner for Firefox */
+input[type=number] {
+  -moz-appearance: textfield; /* Hide spinner in Firefox */
+}
+
+input[type=number]:user-invalid {
+  border-color: rgb(255, 90, 90);
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;

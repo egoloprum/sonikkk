@@ -15,6 +15,7 @@ const config: Config = {
         black_mid: '#1e2020',
         black_hover: '#302c2c',
         black_border: '#4b5563',
+        black_text: '#94989e',
 
         white_extra: '#fffcfc',
         white_mid: '#d4e4ec',

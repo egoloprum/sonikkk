@@ -18,7 +18,10 @@ export const getPrimaryDiet = async (user_id: string) => {
     .eq('user_id', user_id)
     .single() as QueryData<{ data: PrimaryDiet }>
 
-  if (error) {return null}
+  if (error) {
+    return null
+  }
+
   return data as PrimaryDiet
 }
 
