@@ -34,7 +34,9 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
     } catch (error) { console.log(error) }
   }
 
-  const handleNutritionSave = async () => {
+  const handleNutritionSave = async (event: React.FormEvent) => {
+    event.preventDefault();
+
     const nutrition = {
       id: nutritionTarget.id,
       title: title,
@@ -52,13 +54,13 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
   }
 
   return (
-    <>
+    <form onSubmit={(e) => {handleNutritionSave(e)}}>
       <div>
         <p className='flex justify-between items-center gap-2 py-4'>
           <span className='text-xs sm:text-sm md:text-base font-bold'>Title</span>
           <input type="text" className='p-2 outline-none rounded border dark:bg-black_mid bg-white_mid px-2 sm:px-4
             dark:border-black_border border-white_hover focus:dark:border-white_mid focus:border-black_mid
-            text-xs sm:text-sm md:text-base' required value={title} onChange={(e) => {setTitle(e.target.value)}} />
+            text-xs sm:text-sm md:text-base' required defaultValue={title} onChange={(e) => {setTitle(e.target.value)}} />
         </p><hr className='dark:border-black_border border-white_border' />
 
         <p className='flex justify-between gap-2 py-4'>
@@ -66,7 +68,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
           <input type="number" className='p-2 outline-none rounded border dark:bg-black_mid bg-white_mid px-2 sm:px-4
             dark:border-black_border border-white_hover focus:dark:border-white_mid focus:border-black_mid
             text-xs sm:text-sm md:text-base max-w-[3.5rem] sm:max-w-[5rem] md:max-w-[5.5rem] w-full text-right' 
-            value={calories} max={10000} min={1000} 
+            defaultValue={calories} max={10000} min={1000} 
             onChange={(e) => {
               const value = Number(e.target.value);
               if (value >= 1000 && value <= 10000) {
@@ -101,7 +103,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
             <input type="number" className='p-2 outline-none rounded border dark:bg-black_mid bg-white_mid px-2 sm:px-4
               dark:border-black_border border-white_hover focus:dark:border-white_mid focus:border-black_mid
               text-xs sm:text-sm md:text-base max-w-[2.5rem] sm:max-w-[3.75rem] md:max-w-[4rem] w-full text-right'
-              value={carbs} max={1000} min={0} 
+              defaultValue={carbs} max={1000} min={0} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 0 && value <= 1000) {
@@ -119,7 +121,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
             <input type="number" className='p-2 outline-none rounded border dark:bg-black_mid bg-white_mid px-2 sm:px-4
               dark:border-black_border border-white_hover focus:dark:border-white_mid focus:border-black_mid
               text-xs sm:text-sm md:text-base max-w-[2.5rem] sm:max-w-[3.75rem] md:max-w-[4rem] w-full text-right'
-              value={fats} max={1000} min={0} 
+              defaultValue={fats} max={1000} min={0} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 0 && value <= 1000) {
@@ -137,7 +139,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
             <input type="number"  className='p-2 outline-none rounded border dark:bg-black_mid bg-white_mid px-2 sm:px-4
               dark:border-black_border border-white_hover focus:dark:border-white_mid focus:border-black_mid
               text-xs sm:text-sm md:text-base max-w-[2.5rem] sm:max-w-[3.75rem] md:max-w-[4rem] w-full text-right'
-              value={protein} max={1000} min={0} 
+              defaultValue={protein} max={1000} min={0} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 0 && value <= 1000) {
@@ -161,7 +163,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
             <input type="number" className='p-2 outline-none rounded border dark:bg-black_mid bg-white_mid px-2 sm:px-4
               dark:border-black_border border-white_hover focus:dark:border-white_mid focus:border-black_mid
               text-xs sm:text-sm md:text-base max-w-[2.5rem] sm:max-w-[3.75rem] md:max-w-[4rem] w-full text-right'
-              value={fiber} max={1000} min={0} 
+              defaultValue={fiber} max={1000} min={0} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 0 && value <= 1000) {
@@ -175,14 +177,14 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
       </div>
 
       <div className='py-4 flex gap-4 justify-end'>
-        <button className='border-2 dark:border-black_border text-xs sm:text-sm md:text-base hover:dark:bg-black_hover 
+        <button type='button' className='border-2 dark:border-black_border text-xs sm:text-sm md:text-base hover:dark:bg-black_hover 
           px-2 py-1 max-w-28 w-full rounded mr-auto' onClick={() => {handleNutritionDelete(nutritionTarget.id)}}>Delete</button>
-        <button className='border-2 dark:border-black_border text-xs sm:text-sm md:text-base hover:dark:bg-black_hover 
+        <button type='button' className='border-2 dark:border-black_border text-xs sm:text-sm md:text-base hover:dark:bg-black_hover 
           px-2 py-1 max-w-28 w-full rounded' onClick={() => {router.push('/nutrition'); router.refresh()}}>Cancel</button>
-        <button className='border-2 dark:border-black_border text-xs sm:text-sm md:text-base hover:dark:bg-black_hover 
-          px-2 py-1 max-w-28 w-full rounded' onClick={() => {handleNutritionSave()}}>Save</button>
+        <button type='submit' className='border-2 dark:border-black_border text-xs sm:text-sm md:text-base hover:dark:bg-black_hover 
+          px-2 py-1 max-w-28 w-full rounded'>Save</button>
       </div>
-    </>
+    </form>
   )
 }
 
