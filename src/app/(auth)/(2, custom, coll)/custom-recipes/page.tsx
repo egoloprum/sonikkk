@@ -13,7 +13,7 @@ const page = async ({}) => {
   return (
     <>
       <PageNavbar pageName="Custom Recipes" />
-      <div className="pt-16 px-6 sm:px-8 md:px-10 lg:px-12">
+      <div className="py-16 px-6 sm:px-8 md:px-10 lg:px-12 max-w-[800px]">
         <div className="py-4 flex flex-col gap-4">
           <p className="text-xs sm:text-sm md:text-base">Cant find your home-made meal? Create one below</p>
 

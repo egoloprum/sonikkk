@@ -3,13 +3,13 @@ import NutritionEach from '@/components/Diet & Nutrition/NutritionEach'
 import PageNavbar from '@/components/UI/PageNavbar'
 import { FC } from 'react'
 
-interface pageProps {
+interface PageProps {
   params: {
     nutrition_id: string
   }
 }
 
-const page: FC<pageProps> = async ({ params }) => {
+const page: FC<PageProps> = async ({ params }) => {
   const { nutrition_id } = params
 
   let nutritionTarget = {} as NutritionTarget 

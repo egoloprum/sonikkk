@@ -3,6 +3,7 @@
 import { deleteNutritionTarget, saveNutritionTarget } from '@/app/helpers/nutritionHelper'
 import { useRouter } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface NutritionEachProps {
   nutritionTarget: NutritionTarget
@@ -31,7 +32,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
     try {
       const deleteNutr = await deleteNutritionTarget(nutrition_id)
       if (deleteNutr) { router.push('/nutrition'); router.refresh() }
-    } catch (error) { console.log(error) }
+    } catch (error) { console.log(error); toast.error("please refresh") }
   }
 
   const handleNutritionSave = async (event: React.FormEvent) => {
@@ -50,7 +51,7 @@ const NutritionEach: FC<NutritionEachProps> = ({nutritionTarget}) => {
     try {
       const updateNutr = await saveNutritionTarget(nutrition)
       if (updateNutr) { router.push('/nutrition'); router.refresh() }
-    } catch (error) { console.log(error) }
+    } catch (error) { console.log(error); toast.error("please refresh") }
   }
 
   return (
