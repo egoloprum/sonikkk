@@ -1,45 +1,42 @@
-import MealSearch from '@/components/Meal/MealSearch'
+import RecipeSearch from '@/components/Recipe/RecipeSearch'
+import RecipeTable from '@/components/Recipe/RecipeTable'
 import PageNavbar from '@/components/UI/PageNavbar'
 import { authOptions } from '@/lib/auth'
-import axios from 'axios'
 import { getServerSession } from 'next-auth'
+import { notFound } from 'next/navigation'
+import { recipeSearch } from '../helpers/recipeHelper'
 
 interface SearchParams {
-  search:   string
+  query:    string
   page:     string
-  per_page: string
 }
 
 const page = async ({
   searchParams
-} : {searchParams: SearchParams} ) => {
+} : {searchParams: Promise<SearchParams>} ) => {
   const session = await getServerSession(authOptions)
+  if (!session) { notFound }
 
-  const search    = searchParams.search
-  const isProduction = process.env.PRODUCTION_OR_DEVELOPMENT === 'production'
-  
-  let endpoint = '';
-  if (isProduction) { endpoint = 'http://localhost:3000/api/meal/all' }
-  else { endpoint = 'https://sonikkk.vercel.app/api/meal/all' }
+  const resolvedSearchParams = await searchParams;
+  const query = resolvedSearchParams?.query || '';
 
-  let results = []
-  if (search && search.length) {
-    const response = await axios.post(endpoint, {"name": search})
-    results = response.data
+  let recipeData = null
+
+  if (query.length) {
+    recipeData = await recipeSearch(query)
   }
+
+  console.log(recipeData?.length)
 
   return (
     <>
       <PageNavbar pageName="Discover" />
+      <div className="pt-16 px-6 sm:px-8 md:px-10 lg:px-12 max-w-[800px]">
+        <div className="py-4 flex flex-col gap-4">
+          <p className="text-xs sm:text-sm md:text-base">Look for some recipes.</p>
 
-      <div className='pt-16 px-6 sm:px-8 md:px-10 lg:px-12 '>
-        <div className='py-4 gap-4 flex flex-col justify-center'>
-          <MealSearch 
-            sessionId={session?.user.id} 
-            serverSearch={search} 
-            serverResults={results} 
-            isProduction={isProduction} 
-          />
+          <RecipeSearch />
+          <RecipeTable recipeData={recipeData} />
         </div>
       </div>
     </>
