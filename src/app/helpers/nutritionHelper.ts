@@ -43,11 +43,11 @@ export const getNutrition = async (nutrition_id: string) => {
     .eq('id', nutrition_id) as QueryData<{ data: NutritionTarget }>
 
   if (error) {
-    console.error('Error getting nutrition target:', error)
-    throw new Error('Failed to get nutrition target')
+    console.log('Error getting nutrition target:', error)
+    // throw new Error('Failed to get nutrition target')
   }
 
-  return data[0] as NutritionTarget
+  return data as NutritionTarget
 }
 
 export const deleteNutritionTarget = async (nutrition_id: string) => {
