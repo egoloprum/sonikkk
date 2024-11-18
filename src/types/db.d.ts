@@ -5,13 +5,6 @@ interface User {
   id: string
 }
 
-interface likedMeal {
-  user: User
-  meal: Meal
-  liked_at: Date
-  id: string
-}
-
 interface Exclusion {
   user_id: string 
   list: string[]

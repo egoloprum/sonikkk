@@ -1,4 +1,3 @@
-import RecipeCard from "@/components/Meal/RecipeCard"
 import PageNavbar from "@/components/UI/PageNavbar"
 import { authOptions } from "@/lib/auth"
 import { CirclePlus, Search } from "lucide-react"
@@ -36,12 +35,6 @@ const page = async ({}) => {
                 <option value="">Recent</option>
               </select>
             </div>
-          </div>
-
-          <div className="py-4 flex gap-4 flex-wrap">
-            <RecipeCard />
-            <RecipeCard />
-            <RecipeCard />
           </div>
 
         </div>
