@@ -1,18 +1,25 @@
-import { getNutrition } from '@/app/helpers/nutritionHelper'
-import NutritionEach from '@/components/Diet & Nutrition/NutritionEach'
-import PageNavbar from '@/components/UI/PageNavbar'
+import { getNutrition } from '@/app/helpers/nutritionHelper';
+import NutritionEach from '@/components/Diet & Nutrition/NutritionEach';
+import PageNavbar from '@/components/UI/PageNavbar';
 
-interface PageProps {
-  nutrition_id: string
+interface pageProps {
+  params: {
+    nutrition_id: string;
+  };
 }
 
-const page = async ({ PageProps }: { PageProps : Promise<PageProps> } ) => {
-  const resolvedParams = await PageProps;
-  const nutrition_id = resolvedParams?.nutrition_id || '';
+const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
+  const resolvedParams = await params; // Await the params
+  const { nutrition_id } = resolvedParams; // Now you can safely access nutrition_id
 
-  let nutritionTarget = {} as NutritionTarget 
-  try { nutritionTarget = await getNutrition(nutrition_id) } 
-  catch (error) { console.log(error) }
+  console.log(nutrition_id)
+
+  let nutritionTarget = {} as NutritionTarget
+  try {
+    nutritionTarget = await getNutrition(nutrition_id)
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <>
@@ -23,7 +30,7 @@ const page = async ({ PageProps }: { PageProps : Promise<PageProps> } ) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;

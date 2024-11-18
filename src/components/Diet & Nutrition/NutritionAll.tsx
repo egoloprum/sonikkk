@@ -11,7 +11,7 @@ const NutritionAll: FC<NutritionAllProps> = ({nutritionTargets}) => {
   const router = useRouter()
 
   return (
-    <div className="py-4 flex flex-wrap gap-4">
+    <div className="py-4 flex flex-wrap gap-4 cursor-pointer">
     {nutritionTargets.map((target) => (
       <div onClick={() => { router.push(`/nutrition/${target.id}`); router.refresh() }} key={target.id} className="py-4 flex-1 hover:dark:bg-black_hover rounded
         hover:bg-white_hover px-2 flex flex-col gap-2 max-w-[300px] select-none">

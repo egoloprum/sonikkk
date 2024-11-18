@@ -18,12 +18,10 @@ const RecipeTable: FC<RecipeTableProps> = ({recipeData}) => {
   return (
     <div className='py-4 border-2 flex gap-4 flex-wrap'>
       {recipes?.map((recipe: Recipe) => (
-        recipe.images.thumbnail.length ? (
-          <div key={recipe.food_name} className='p-4 border-2'>
-            {recipe.food_name}
-            <img src={`https://images.eatthismuch.com/${recipe.images.thumbnail}`} alt="" />
-          </div>
-        ): (null)
+        <div key={recipe.recipe_id} className='p-4 border-2'>
+          {recipe.food_name}
+          {/* <img src={`${recipe.images.image}`} alt="" /> */}
+        </div>
       ))}
     </div>
   )

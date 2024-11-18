@@ -60,13 +60,6 @@ export const MealSelector = async ( mealsLiked: {meal_id: string}[] ) => {
   return mealsList
 }
 
-export const MealSelectAll = async (keyword: string) => {
-  const { data, error } = await supabase
-    .rpc('search_meal', { search_term: keyword }) as QueryData<{ data: Meal[] }>
-
-  if (error) { return null }
-  return data as Meal[]
-}
 
 export const MealPaginator = async (page: number, meals_search: Meal[]) => {
   const { data, error } = await supabase

@@ -47,7 +47,7 @@ export const getNutrition = async (nutrition_id: string) => {
     // throw new Error('Failed to get nutrition target')
   }
 
-  return data as NutritionTarget
+  return data[0] as NutritionTarget
 }
 
 export const deleteNutritionTarget = async (nutrition_id: string) => {
