@@ -4,13 +4,13 @@ import PageNavbar from '@/components/UI/PageNavbar';
 
 interface pageProps {
   params: {
-    nutrition_id: string;
-  };
+    nutrition_id: string
+  }
 }
 
 const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
-  const resolvedParams = await params; // Await the params
-  const { nutrition_id } = resolvedParams; // Now you can safely access nutrition_id
+  const resolvedParams = await params
+  const { nutrition_id } = resolvedParams
 
   console.log(nutrition_id)
 

@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['edamam-product-images.s3.amazonaws.com', 'img.buzzfeed.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.buzzfeed.com',
+        port: '',
+        pathname: '/video-api-prod/assets/**',
+      },
+    ],
   },
 };
 

@@ -33,6 +33,16 @@ interface NutritionTarget {
   fiber: number 
 }
 
+interface NutritionRecipe {
+  calories:       number
+  carbs:          number 
+  fat:            number
+  fiber:          number
+  protein:        number
+  sugar:          number
+  cholesterol:    number
+}
+
 interface Recipe {
   recipe_id: number
   food_name: string
@@ -51,9 +61,13 @@ interface Recipe {
   is_snack: boolean
   tag_cloud: string
 
-  nutritions: object
+  nutritions: NutritionRecipe
   directions: string[]
-  ingredients: object[]
+  
+  ingredients: {
+    name: string
+    description: string
+  }[]
 
   is_custom: boolean
 }

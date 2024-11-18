@@ -26,8 +26,6 @@ const page = async ({
     recipeData = await recipeSearch(query)
   }
 
-  console.log(recipeData?.length)
-
   return (
     <>
       <PageNavbar pageName="Discover" />
@@ -36,7 +34,7 @@ const page = async ({
           <p className="text-xs sm:text-sm md:text-base">Look for some recipes.</p>
 
           <RecipeSearch />
-          <RecipeTable recipeData={recipeData} />
+          <RecipeTable recipeData={recipeData} query={query} />
         </div>
       </div>
     </>
