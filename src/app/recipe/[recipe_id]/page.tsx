@@ -39,7 +39,7 @@ const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
               <p className="text-base sm:text-lg md:text-xl font-bold">Nutrition</p>
 
               <div className="flex flex-col gap-1.5">
-                {Object.entries(recipe?.nutritions!).map(([key, value]) => (
+                {Object.entries(recipe?.nutritions ?? {}).map(([key, value]) => (
                   <p key={key} className="flex gap-2 justify-between text-sm sm:text-base">
                     <span>{key}</span>
                     <span>{value || 0}</span>
