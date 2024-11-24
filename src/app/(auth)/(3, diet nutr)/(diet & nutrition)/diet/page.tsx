@@ -1,10 +1,53 @@
 import { createPrimaryDiet, getPrimaryDiet } from "@/app/helpers/dietHelper"
-import DietClient from "@/components/Diet & Nutrition/DietClient"
 import PageNavbar from "@/components/UI/PageNavbar"
 import { authOptions } from "@/lib/auth"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import DietForm from "@/components/Diet & Nutrition/DietForm"
+
+const defaultDiets = [
+  {
+    name: "Anything",
+    exclusion: "Nothing",
+    icon: "Sandwich",
+    excludeList: []
+  },
+  {
+    name: "Keto",
+    exclusion: "Legumes, Starchy Vegetables, Grains",
+    icon: "Wheat",
+    excludeList: ['Beans', 'Lentils', 'Peas', 'Potato', 'Yam', 'Corn', 'Rice', 'Oats', 'Wheat', 'Barley', 'Couscous', 'Quinoa']
+  },
+  {
+    name: "Mediterranean",
+    exclusion: "Red Meat, Starchy Vegetables, Fruit juice",
+    icon: "Cherry",
+    excludeList: ['Beef', 'Pork', 'Lamb', 'Veal', 'Potato', 'Yam', 'Corn', 'Fruit juice']
+  },
+  {
+    name: "Paleo",
+    exclusion: "Dairy, Grains, Legumes, Soy, Starchy Vegetables",
+    icon: "Drumstick",
+    excludeList: ['Milk', 'Cream', 'Cheese', 'Yogurt', 'Cottage Cheese', 'Rice', 'Oats', 'Wheat', 'Barley', 'Couscous', 'Quinoa',
+      'Beans', 'Lentils', 'Peas', 'Soy', 'Tofu', 'Potato', 'Yam'
+    ]
+  },
+  {
+    name: "Vegan",
+    exclusion: "Red Meat, Poultry, Shellfish, Fish, Dairy, Eggs, Mayo, Honey",
+    icon: "Vegan",
+    excludeList: ['Beef', 'Pork', 'Lamb', 'Veal', 'Chicken', 'Turkey', 'Shellfish', 'Fish', 'Salmon', 'Tuna', 'Tilapia',
+      'Milk', 'Cream', 'Cheese', 'Yogurt', 'Cottage Cheese', 'Eggs', 'Mayo', 'Honey'
+    ]
+  },
+  {
+    name: "Vegetarian",
+    exclusion: "Red Meat, Poultry, Shellfish",
+    icon: "LeafyGreen",
+    excludeList: ['Beef', 'Pork', 'Lamb', 'Veal', 'Chicken', 'Turkey', 'Shellfish']
+  },
+] 
 
 const page = async ({}) => {
   const session = await getServerSession(authOptions)
@@ -30,7 +73,14 @@ const page = async ({}) => {
             <Link href='/exclusion' className="underline underline-offset-4 ml-2">Exclusions menu screen.</Link>
           </p>
 
-          <DietClient primaryDiet={primaryDiet} user_id={user_id} />
+          <div  className="flex flex-col gap-4">
+            {defaultDiets.map((diet, index) => {
+              
+              return (
+                <DietForm diet={diet} key={index} primaryDiet={primaryDiet} user_id={user_id} />
+              )
+            })}
+          </div>
 
         </div>
       </div>
