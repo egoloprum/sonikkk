@@ -45,10 +45,18 @@ const CompSidebar:FC<CompSidebarProps> = ({
     localStorage.setItem('theme', newTheme);
   }
 
-  const expandSidebar = () => {
-    const sidebar = isExpanded ? 'true' : 'false';
-    setIsExpanded(!isExpanded);
-    localStorage.setItem('sidebar', sidebar);
+
+
+  const expandSidebar = (condition: string) => {
+    const viewportWidth = window.innerWidth;
+    console.log('Viewport Width:', viewportWidth);
+    console.log(condition)
+
+    if ((condition == "SmallScreen" && viewportWidth < 640) || condition == "ExpandBtn") {
+      const sidebar = isExpanded ? 'true' : 'false'
+      setIsExpanded(!isExpanded)
+      localStorage.setItem('sidebar', sidebar)
+    }
   }
 
   return (
@@ -60,7 +68,7 @@ const CompSidebar:FC<CompSidebarProps> = ({
       { isExpanded ? (
         <div className='px-4'>
           <div className='p-2 flex justify-between'>
-            <p onClick={expandSidebar} 
+            <p onClick={() => expandSidebar("ExpandBtn")} 
               className={`border-2 p-2 rounded-full cursor-pointer dark:hover:bg-black_hover hover:bg-white_hover`}
             >
               <Menu />
@@ -81,17 +89,17 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
           {/* planner community discover */}
           <div className='flex flex-col mt-4'>
-            <Link href='/planner' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/planner' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover text-sm font-bold ${pathname === '/planner' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <CalendarRange />
               <span>Planner</span>
             </Link>
-            <Link href='/community' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/community' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover text-sm font-bold ${pathname === '/community' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Users />
               <span>Community</span>
             </Link>
-            <Link href='/discover' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/discover' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover text-sm font-bold ${pathname === '/discover' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Search />
               <span>Discover</span>
@@ -100,12 +108,12 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
           {/* custom-recipes collections */}
           <div className='flex flex-col mt-4'>
-            <Link href='/custom-recipes' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/custom-recipes' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover text-sm font-bold ${pathname === '/custom-recipes' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <CookingPot  />
               <span >Custom recipes</span>
             </Link>
-            <Link href='/collections' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/collections' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover text-sm font-bold ${pathname === '/collections' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Star  />
               <span className='my-auto'>Collections</span>
@@ -127,36 +135,36 @@ const CompSidebar:FC<CompSidebarProps> = ({
                 )}
               </p>
               <div className={`overflow-hidden transition-max-height duration-300 ease-in-out ${accord1 ? 'max-h-40 pl-4 pb-2' : 'max-h-0'}`}>
-                <Link href='/nutrition' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/nutrition' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/nutrition' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Nutrition Targets</span>
                 </Link>
-                <Link href='/diet' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/diet' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/diet' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Primary Diet</span>
                 </Link>
-                <Link href='/exclusion' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/exclusion' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/exclusion' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Food Exclusions</span>
                 </Link>
-                <Link href='/rated' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/rated' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/rated' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Rated Foods</span>
                 </Link>
               </div>
             </div>
 
-            <Link href='/stats' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+            <Link href='/stats' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
               dark:hover:bg-black_hover hover:bg-white_hover text-sm font-bold ${pathname === '/stats' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <ChartNoAxesColumn />
               <span>Physical Stats</span>
             </Link>
-            <Link href='/goal' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+            <Link href='/goal' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
               dark:hover:bg-black_hover hover:bg-white_hover text-sm font-bold ${pathname === '/goal' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Goal />
               <span>Weight and Goal</span>
             </Link>
-            <Link href='/generator' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+            <Link href='/generator' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
               dark:hover:bg-black_hover hover:bg-white_hover text-sm font-bold ${pathname === '/generator' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <SlidersVertical />
               <span>Generator Settings</span>
@@ -178,15 +186,15 @@ const CompSidebar:FC<CompSidebarProps> = ({
                 )}
               </p>
               <div className={`overflow-hidden transition-max-height duration-300 ease-in-out ${accord2 ? 'max-h-40 pl-4 pb-2' : 'max-h-0'}`}>
-                <Link href='/account/credentials' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/account/credentials' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/account/credentials' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Credentials</span>
                 </Link>
-                <Link href='/account/notifications' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/account/notifications' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/account/notifications' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Notifications</span>
                 </Link>
-                <Link href='/account/followers' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+                <Link href='/account/followers' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
                   dark:hover:bg-black_hover hover:bg-white_hover ${pathname === '/account/followers' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
                   <span>Followers</span>
                 </Link>
@@ -194,7 +202,7 @@ const CompSidebar:FC<CompSidebarProps> = ({
             
             </div>
 
-            <Link href='/help' className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
+            <Link href='/help' onClick={() => expandSidebar("SmallScreen")} className={`p-2 flex gap-2 items-center rounded py-2 select-none cursor-pointer 
               dark:hover:bg-black_hover hover:bg-white_hover text-sm font-bold ${pathname === '/help' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <CircleHelp />
               <span>Help</span>
@@ -211,30 +219,30 @@ const CompSidebar:FC<CompSidebarProps> = ({
       ) : (
         <div className='px-2 mt-4 flex flex-col gap-8 h-full'>
           <div className='flex sm:flex-col justify-between gap-4 px-2'>
-            <p onClick={expandSidebar} 
-              className='sm:border-2 order-last sm:order-first flex flex-col gap-2 sm:gap-0 w-full sm:justify-center items-center sm:p-2 py-2 rounded-full cursor-pointer 
+            <p onClick={() => expandSidebar("ExpandBtn")} className='basis-1/4 sm:border-2 order-last sm:order-first flex flex-col gap-2 
+              sm:gap-0 w-full sm:justify-center items-center sm:p-2 py-2 rounded sm:rounded-full cursor-pointer 
               dark:hover:bg-black_hover hover:bg-white_hover font-bold'
             >
               <Menu />
-              <span className='text-xs sm:hidden block'>Menu</span>
+              <span className='text-[3vw] sm:hidden block'>Menu</span>
             </p>
 
-            <Link href='/planner' className={`py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/planner' className={`basis-1/4 py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/planner' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <CalendarRange />
-              <span className='text-xs'>Planner</span>
+              <span className='text-[3vw] sm:text-xs'>Planner</span>
             </Link>
 
-            <Link href='/community' className={`py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover 
+            <Link href='/community' className={`basis-1/4 py-2 px-1 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover 
               hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/community' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Users />
-              <span className='text-xs'>Community</span>
+              <span className='text-[3vw] sm:text-xs'>Community</span>
             </Link>
 
-            <Link href='/discover' className={`py-2 w-full flex flex-col gap-2 items-center cursor-pointer 
+            <Link href='/discover' className={`basis-1/4 py-2 w-full flex flex-col gap-2 items-center cursor-pointer 
               dark:hover:bg-black_hover hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/discover' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Search />
-              <span className='text-xs'>Discover</span>
+              <span className='text-[3vw] sm:text-xs'>Discover</span>
             </Link>        
           </div>
 

@@ -29,9 +29,9 @@ const DietForm: FC<DietFormProps> = ({
       hover:dark:bg-black_hover hover:bg-white_hover cursor-pointer 
       ${primaryDiet.diet_type === diet.name ? 'dark:bg-black_hover bg-white_hover' : '' }`}
     >
-      <input type="hidden" name="exclusionUserId" className="hidden" defaultValue={user_id} />
-      <input type="hidden" name="exclusionName" className="hidden" defaultValue={diet.name} />
-      <input type="hidden" name="exclusionList" className="hidden" defaultValue={diet.exclusion} />
+      <input type="hidden" name="dietUserId" className="hidden" defaultValue={user_id} />
+      <input type="hidden" name="dietName" className="hidden" defaultValue={diet.name} />
+      <input type="hidden" name="dietList" className="hidden" defaultValue={diet.excludeList} />
 
       <DietButton diet={diet} />
 
