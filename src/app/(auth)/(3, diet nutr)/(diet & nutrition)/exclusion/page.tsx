@@ -86,9 +86,9 @@ const page = async ({}) => {
 
   let exclusionCount = 0
 
-  // if (exclusion) {
-  //   exclusionCount = await getExclusionCount(exclusion.list)
-  // }
+  if (exclusion) {
+    exclusionCount = await getExclusionCount(exclusion.list)
+  }
 
   return (
     <>
@@ -119,16 +119,16 @@ const page = async ({}) => {
             <div className='flex gap-2 flex-col'>
               <p className='font-bold text-base sm:text-lg md:text-xl'>Recipes Variety</p>
               <p className='text-xs sm:text-sm md:text-base'>You have excluded 
-                <span className='font-bold ml-2'>13</span> % of the available recipes.
+                <span className='font-bold ml-2'>{exclusionCount}</span> % of the available recipes.
               </p>
             </div>
-          </div><hr className=' border-gray_border' />
+          </div><hr className='border-gray_border' />
 
           <div className="flex gap-4 flex-col">
             <div className="flex flex-col gap-4">
               {defaultExclusions.map((defExclusionList, index1) => {
                 return (
-                  <div className='flex flex-col gap-2'>
+                  <div key={index1} className='flex flex-col gap-2'>
                     <p className="font-bold text-base sm:text-lg md:text-xl">{defExclusionList.name}</p>
 
                     <div className="flex flex-wrap gap-2">
@@ -143,10 +143,6 @@ const page = async ({}) => {
             </div>
           </div>
 
-
-
-
-          {/* <ExclusionClient exclusion={exclusion} user_id={user_id} exclusionCount={exclusionCount} /> */}
         </div>
       </div>
     </>

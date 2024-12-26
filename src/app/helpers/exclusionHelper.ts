@@ -45,10 +45,10 @@ export const updateExclusion = async (user_id: string, list: string[]) => {
 
 export const getExclusionCount = async (list: string[]) => {
   const { data: excludedCount, error } = await supabase
-    .rpc('get_meals_exclusion_count', {exclude_keywords: list}) as QueryData<{ data: number }>
+    .rpc('count_excluded_recipes', {exclude_keywords: list}) as QueryData<{ data: number }>
 
   const { data: count } = await supabase
-    .rpc('get_meals_count') as QueryData<{ data: number }>
+    .rpc('get_recipe_count') as QueryData<{ data: number }>
 
   const percent = 100 - Math.round((excludedCount / count) * 100)
 

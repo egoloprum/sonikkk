@@ -14,6 +14,7 @@ interface ExclusionFormProps {
 const ExclusionForm: FC<ExclusionFormProps> = ({
   exclusion, exclusionList, key, user_id
 }) => {
+
   return (
     <form key={key} action={submitExclusionAction}
       className={`${exclusionList?.includes(exclusion) ? 'dark:bg-black_hover bg-white_hover' : 
