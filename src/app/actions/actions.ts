@@ -18,11 +18,12 @@ export const submitDietAction = async (formData: FormData) => {
   }
   else {
     console.log("error")
+    return
   }
 }
 
 export const submitExclusionAction = async (formData: FormData) => {
-  const user_id = formData.get("exclusionUser Id") as string;
+  const user_id = formData.get("exclusionUserId") as string;
   const exclusion = formData.get("exclusionName") as string;
   let exclusionList = (formData.get("exclusionList") as string).split(',');
 
@@ -34,11 +35,12 @@ export const submitExclusionAction = async (formData: FormData) => {
 
   const responseExclusion = await updateExclusion(user_id, exclusionList);
 
-  console.log(`${exclusion} has been ${exclusionExists ? 'removed' : 'added'}.`);
-
   if (responseExclusion.status === 200) {
     revalidatePath("/exclusion");
   } else {
     console.log("error");
+    return
   }
+
+  console.log(`${exclusion} has been ${exclusionExists ? 'removed' : 'added'}.`);
 }

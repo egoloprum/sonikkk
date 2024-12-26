@@ -6,8 +6,6 @@ export const createExclusion = async (user_id: string) => {
     .from('exclusions')
     .insert({ user_id: user_id })
 
-  console.log("go")
-
   if (error) { return new Response('Invalid request', {status: 400}) }
   return new Response('OK', {status: 200}) 
 }
@@ -24,6 +22,9 @@ export const getExclusion = async (user_id: string) => {
 }
 
 export const updateExclusion = async (user_id: string, list: string[]) => {
+  if (!user_id) {
+    return new Response('Invalid request', { status: 400 }) 
+  }
   const excluseExists = await getExclusion(user_id)
 
   if (!excluseExists) {
