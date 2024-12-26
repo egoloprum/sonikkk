@@ -93,8 +93,8 @@ const page = async ({}) => {
   return (
     <>
       <PageNavbar pageName="Food Exclusions" />
-      <div className="py-16 px-6 sm:px-8 md:px-10 lg:px-12 max-w-[800px]">
-        <div className="py-4 flex flex-col gap-4">
+      <div className="py-16 px-6 md:px-8 lg:px-10 flex justify-center">
+        <div className="py-4 flex flex-col gap-2 sm:gap-4 w-full max-w-[800px]">
           <p className="text-xs sm:text-sm md:text-base">
             Add exclusions to filter out recipes from the generator suggestions. Any recipes 
             that match their title or ingredients will not be included in your plans.

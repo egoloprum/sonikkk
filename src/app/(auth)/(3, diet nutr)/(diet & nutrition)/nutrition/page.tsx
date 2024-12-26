@@ -20,8 +20,8 @@ const page = async ({}) => {
   return (
     <>
       <PageNavbar pageName="Nutrition Targets" />
-      <div className="pt-16 px-6 sm:px-8 md:px-10 lg:px-12 max-w-[800px]">
-        <div className="py-4 flex flex-col gap-4">
+      <div className="py-16 px-6 md:px-8 lg:px-10 flex justify-center">
+        <div className="py-4 flex flex-col gap-2 sm:gap-4 w-full max-w-[800px]">
           <p className="text-xs sm:text-sm md:text-base">These store your desired nutrition targets. 
             You can use the same targets for every day of the week, or give different profiles to 
             different days (like workout vs rest days).

@@ -23,17 +23,22 @@ const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
   return (
     <>
     <PageNavbar pageName={recipe?.food_name || ""} />
-    <div className="pt-16 px-6 sm:px-8 md:px-10 lg:px-12 max-w-[800px]">
-      <div className="py-4 flex flex-col gap-2 sm:gap-4">
+    <div className="py-16 px-6 md:px-8 lg:px-10 flex justify-center">
+      <div className="py-4 flex flex-col gap-2 sm:gap-4 w-full max-w-[800px]">
 
-        <div className="py-2 sm:py-4 flex flex-col sm:flex-row gap-2 sm:gap-4 md:gap-8">
+        <div className="py-2 sm:py-4 flex flex-col md:flex-row gap-2 sm:gap-4 md:gap-8">
+          
+          {/* left side */}
           <div className="basis-1/2 flex flex-col gap-2 sm:gap-4">
-            <div className='overflow-hidden'>
+            <div className='overflow-hidden w-full'>
               <img src={recipe?.images.image || '/default_image_recipe.jpg'} 
                 className='w-full h-full rounded' alt="" loading='lazy' />
             </div>
 
-            <RecipeButtons />
+            <div className="w-full flex justify-center">
+              <RecipeButtons />
+            </div>
+
 
             <div className="py-2 sm:py-4 flex flex-col gap-2 sm:gap-4">
               <p className="text-base sm:text-lg md:text-xl font-bold">Nutrition</p>
@@ -49,6 +54,7 @@ const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
             </div>
           </div>
 
+          {/* right side */}
           <div className="basis-1/2 flex flex-col gap-2 sm:gap-4">
             <div className="py-2 sm:py-4">
               <p className="flex gap-2 justify-between text-sm sm:text-base">
