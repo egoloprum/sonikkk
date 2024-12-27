@@ -41,6 +41,14 @@ input[type=number]:user-invalid {
   border-color: rgb(255, 90, 90);
 }
 
+#tileGrid {
+  background-image: 
+    linear-gradient(to right, #242424 1px, transparent 1px),
+    linear-gradient(to bottom, #242424 1px, transparent 1px);
+
+  background-size: 5.5rem 5.5rem;
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;

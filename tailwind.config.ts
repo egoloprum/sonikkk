@@ -11,11 +11,19 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
-        black_extra: '#201c1c',
+        black_extra: '#171717',
         black_mid: '#1e2020',
         black_hover: '#302c2c',
         black_border: '#4b5563',
         black_text: '#94989e',
+        black_text_white: "#f4f4f5",
+        black_text_gray: "#9f9f9f",
+
+        text_red: "#ef4444",
+        text_link: "#895df6",
+
+        border_purple: "#734acc",
+        background_gray: "#282424",
 
         white_extra: '#fffcfc',
         white_mid: '#d4e4ec',
