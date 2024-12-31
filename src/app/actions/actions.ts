@@ -47,7 +47,7 @@ export const submitExclusionAction = async (formData: FormData) => {
 }
 
 export const submitSavedAction = async (formData: FormData) => {
-  const user_id = formData.get("savedUser Id") as string
+  const user_id = formData.get("savedUserId") as string
   const recipe_id = formData.get("savedRecipeId") as string
   const savedAlreadyStr = formData.get("savedAlready") as string
 
@@ -64,7 +64,7 @@ export const submitSavedAction = async (formData: FormData) => {
 }
 
 export const submitLikedAction = async (formData: FormData) => {
-  const user_id = formData.get("likedUser Id") as string
+  const user_id = formData.get("likedUserId") as string
   const recipe_id = formData.get("likedRecipeId") as string
   const likedAlreadyStr = formData.get("likedAlready") as string
 
