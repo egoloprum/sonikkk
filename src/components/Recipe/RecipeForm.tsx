@@ -1,10 +1,11 @@
 "use client"
 
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { submitLikedAction, submitSavedAction } from '@/app/actions/actions'
 import { Ban, Pin } from 'lucide-react'
 import RecipeLikeButton from './RecipeLikeButton'
 import RecipeSaveButton from './RecipeSaveButton'
+import toast from 'react-hot-toast'
 
 interface RecipeFormProps {
   user_id: string 
@@ -19,9 +20,25 @@ const RecipeForm: FC<RecipeFormProps> = ({
   const likedValue = likedAlready ? "true" : "false"
   const savedValue = savedAlready ? "true" : "false"
 
+  const [likedState, setLikedState] = useState<boolean>(likedAlready)
+  const [savedState, setSavedState] = useState<boolean>(savedAlready)
+
+  useEffect(() => {
+    if (likedState !== likedAlready) {
+      likedState ? toast.success("unliked recipe") : toast.success("liked recipe")
+      setLikedState(likedAlready)
+    }
+  }, [likedAlready])
+
+  useEffect(() => {
+    if (savedState !== savedAlready) {
+      savedState ? toast.success("unsaved recipe") : toast.success("saved recipe")
+      setSavedState(savedAlready)
+    }
+  }, [savedAlready])
+
   return (
     <div className='py-2 sm:py-4 max-w-64 flex gap-4 justify-between'>
-
       <form action="" className='rounded-full'>
         <button
           type='button' 
