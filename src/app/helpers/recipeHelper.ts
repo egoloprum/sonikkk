@@ -22,6 +22,33 @@ export const recipeGetById = async (recipe_id: string) => {
   return data as Recipe
 }
 
+export const recipeSavedGetByIds = async (recipes_ids: { recipe_id: string }[]) => {
+  const savedRecipes: Recipe[] = (
+    await Promise.all(
+      recipes_ids.map(async (recipe_obj: { recipe_id: string }) => {
+        const responseGetRecipe = await recipeGetById(recipe_obj.recipe_id)
+        return responseGetRecipe
+      })
+    )
+  ).filter((recipe): recipe is Recipe => recipe !== undefined)
+
+  return savedRecipes
+}
+
+export const recipeLikedAll = async (user_id: string): Promise<Response> => {
+  const { data: likedRecipes, error } = await supabase
+    .from("recipeLiked")
+    .select("recipe_id")
+    .eq("user_id", user_id)
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  }
+
+  return new Response(JSON.stringify(likedRecipes), { status: 200 })
+};
+
+
 export const recipeLikedAlready = async (recipe_id: string, user_id: string): Promise<Response> => {
   const { data: likedAlready, error } = await supabase
     .from('recipeLiked')
@@ -84,6 +111,19 @@ export const recipeLikeRemove = async (recipe_id: string, user_id: string): Prom
   }
 
   return new Response(JSON.stringify({ success: true, message: "Recipe like removed successfully." }), { status: 200 })
+}
+
+export const recipeSavedAll = async (user_id: string):  Promise<Response> => {
+  const { data: savedRecipes, error } = await supabase
+    .from('recipeSaved')
+    .select('recipe_id')
+    .eq('user_id', user_id)
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  }
+
+  return new Response(JSON.stringify(savedRecipes), { status: 200 })
 }
 
 export const recipeSavedAlready = async (recipe_id: string, user_id: string): Promise<Response> => {
