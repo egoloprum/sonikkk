@@ -22,7 +22,6 @@ const DietForm: FC<DietFormProps> = ({
   diet, key, primaryDiet, user_id
 }) => {
 
-
   return (
     <form action={submitDietAction} key={key} 
       className={`border-2 dark:border-black_border border-white_border rounded select-none
@@ -34,7 +33,6 @@ const DietForm: FC<DietFormProps> = ({
       <input type="hidden" name="dietList" className="hidden" defaultValue={diet.excludeList} />
 
       <DietButton diet={diet} />
-
     </form>
   )
 }

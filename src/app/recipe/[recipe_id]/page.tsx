@@ -1,5 +1,5 @@
-import { recipeGetById } from "@/app/helpers/recipeHelper";
-import RecipeButtons from "@/components/Recipe/RecipeButtons";
+import { recipeGetById, recipeLikedAlready, recipeSavedAlready } from "@/app/helpers/recipeHelper";
+import RecipeForm from "@/components/Recipe/RecipeForm";
 import PageNavbar from "@/components/UI/PageNavbar";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
@@ -17,8 +17,17 @@ const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
 
   const session = await getServerSession(authOptions)
   if (!session) { notFound() }
+  const user_id = session.user.id 
 
   const recipe = await recipeGetById(recipe_id)
+
+  const likedResponse = await recipeLikedAlready(recipe_id, user_id)
+  const likedData = await likedResponse.json()
+  const likedAlready = likedData.likedAlready
+  
+  const savedResponse = await recipeSavedAlready(recipe_id, user_id)
+  const savedData = await savedResponse.json()
+  const savedAlready = savedData.savedAlready
 
   return (
     <>
@@ -36,7 +45,7 @@ const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
             </div>
 
             <div className="w-full flex justify-center">
-              <RecipeButtons />
+              <RecipeForm user_id={user_id} recipe_id={recipe_id} likedAlready={likedAlready} savedAlready={savedAlready} />
             </div>
 
 

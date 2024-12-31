@@ -28,7 +28,7 @@ export default async function RootLayout({
 
     <html lang="en">
       <body className={`${bangers.className} flex ${ !session ? 'flex-col' : '' } dark:bg-black_mid 
-        dark:text-white_text bg-white_extra relative`}>
+        dark:text-white_text bg-white_extra relative `}>
         { !session ? (
           <>
             <CompNavbar className='max-w-[1000px] w-full z-10' />
@@ -39,7 +39,7 @@ export default async function RootLayout({
         ) : (
           <CompSidebar profile={{picture: session.user.image!, username: session.user.name! }} />
         ) }
-        <main className={`${ !session ? 'flex justify-center' : 'mb-20 sm:mb-0' } w-full z-10`}>
+        <main className={`${ !session ? 'flex justify-center' : 'mb-20 sm:mb-0' } w-full z-10 h-full`}>
           <div className={`${ !session ? 'max-w-[1000px] px-4' : '' } w-full`}>
             <Providers>{children}</Providers>
           </div>

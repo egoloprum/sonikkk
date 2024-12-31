@@ -14,10 +14,14 @@ const config: Config = {
         black_extra: '#171717',
         black_mid: '#1e2020',
         black_hover: '#302c2c',
-        black_border: '#4b5563',
-        black_text: '#94989e',
-        black_text_white: "#f4f4f5",
-        black_text_gray: "#9f9f9f",
+
+        black_bg_card: "#272627",
+        black_bg_btn: "#303031",
+        black_text_primary: "#fefffe",
+        black_text_secondary: "#919191",
+        black_line: "#343434",
+
+        black_border: "#444445",
 
         text_red: "#ef4444",
         text_link: "#895df6",
