@@ -3,7 +3,7 @@
 import { FC, useState } from 'react'
 import { signIn } from "next-auth/react"
 import toast from 'react-hot-toast'
-import { Loader2, LogIn } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 interface SignInProps {
   className?: string

@@ -47,49 +47,35 @@ export const submitExclusionAction = async (formData: FormData) => {
 }
 
 export const submitSavedAction = async (formData: FormData) => {
-  const user_id = formData.get("savedUserId") as string
+  const user_id = formData.get("savedUser Id") as string
   const recipe_id = formData.get("savedRecipeId") as string
   const savedAlreadyStr = formData.get("savedAlready") as string
 
-  const savedCondition = savedAlreadyStr === 'true' ? true : false
-  let response: boolean
+  const savedCondition = savedAlreadyStr === 'true'
 
-  if (savedCondition) {
-    response = await recipeSaveRemove(recipe_id, user_id)
-  }
-  else {
-    response = await recipeSaveAdd(recipe_id, user_id)
-  }
+  const response = savedCondition 
+    ? await recipeSaveRemove(recipe_id, user_id) 
+    : await recipeSaveAdd(recipe_id, user_id)
 
-  if (response) {
-    revalidatePath(`/recipe/${recipe_id}`)
-  }
-  else {
-    console.log("error")
-    return
-  }
+  const responseData = await response.json()
+
+  if (responseData.success) { revalidatePath(`/recipe/${recipe_id}`) } 
+  else { console.log("Error:", responseData.message) }
 }
 
 export const submitLikedAction = async (formData: FormData) => {
-  const user_id = formData.get("likedUserId") as string
+  const user_id = formData.get("likedUser Id") as string
   const recipe_id = formData.get("likedRecipeId") as string
   const likedAlreadyStr = formData.get("likedAlready") as string
 
-  const likedCondition = likedAlreadyStr === 'true' ? true : false
-  let response: boolean
+  const likedCondition = likedAlreadyStr === 'true'
 
-  if (likedCondition) {
-    response = await recipeLikeRemove(recipe_id, user_id)
-  }
-  else {
-    response = await recipeLikeAdd(recipe_id, user_id)
-  }
+  const response = likedCondition 
+    ? await recipeLikeRemove(recipe_id, user_id) 
+    : await recipeLikeAdd(recipe_id, user_id)
 
-  if (response) {
-    revalidatePath(`/recipe/${recipe_id}`)
-  }
-  else {
-    console.log("error")
-    return
-  }
+  const responseData = await response.json()
+
+  if (responseData.success) { revalidatePath(`/recipe/${recipe_id}`) } 
+  else { console.log("Error:", responseData.message) }
 }
