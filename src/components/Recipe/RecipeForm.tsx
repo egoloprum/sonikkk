@@ -25,14 +25,17 @@ const RecipeForm: FC<RecipeFormProps> = ({
 
   useEffect(() => {
     if (likedState !== likedAlready) {
-      likedState ? toast.success("unliked recipe") : toast.success("liked recipe")
+      if (likedState) { toast.success("unliked recipe") }
+      else { toast.success("liked recipe") }
+
       setLikedState(likedAlready)
     }
   }, [likedAlready])
 
   useEffect(() => {
     if (savedState !== savedAlready) {
-      savedState ? toast.success("unsaved recipe") : toast.success("saved recipe")
+      if (savedState) { toast.success("unsaved recipe") }
+      else { toast.success("saved recipe") }
       setSavedState(savedAlready)
     }
   }, [savedAlready])
