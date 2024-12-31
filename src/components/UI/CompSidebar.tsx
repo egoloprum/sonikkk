@@ -61,8 +61,7 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
   return (
     <div className={` ${ isExpanded ? 'max-w-72' : 'max-w-28' } sm:w-full z-40 transition-width duration-200`}>
-      <div className={`${ isExpanded ? 'sm:w-72 overflow-y-auto scrollbar-hidden h-screen' : 'sm:w-28' } py-2 sm:border-r-2 sm:border-white_hover 
-        dark:border-black_mid dark:bg-black_extra bg-white_extra sm:h-full w-full fixed sm:top-0 sm:left-0 bottom-0 transition-width duration-200`}
+      <div className={`${ isExpanded ? 'sm:w-72 overflow-y-auto scrollbar-hidden h-screen' : 'sm:w-28' } py-2 sm:border-r-2 sm:border-white_hover dark:border-black_mid dark:bg-black_extra bg-white_extra sm:h-full w-full fixed sm:top-0 sm:left-0 bottom-0 transition-width duration-200`}
       >
 
       { isExpanded ? (
@@ -217,37 +216,31 @@ const CompSidebar:FC<CompSidebarProps> = ({
           </div>
         </div>
       ) : (
-        <div className='px-2 mt-4 flex flex-col gap-8 h-full'>
+        <div className='px-2 sm:mt-4 flex flex-col gap-8 h-full'>
           <div className='flex sm:flex-col justify-between gap-4 px-2'>
-            <p onClick={() => expandSidebar("ExpandBtn")} className='basis-1/4 sm:border-2 order-last sm:order-first flex flex-col gap-2 
-              sm:gap-0 w-full sm:justify-center items-center sm:p-2 py-2 rounded sm:rounded-full cursor-pointer 
-              dark:hover:bg-black_hover hover:bg-white_hover font-bold'
+            <p onClick={() => expandSidebar("ExpandBtn")} className='basis-1/4 sm:border-2 order-last sm:order-first flex flex-col gap-2 sm:gap-0 w-full sm:justify-center items-center sm:p-2 py-4 rounded sm:rounded-full cursor-pointer dark:hover:bg-black_hover hover:bg-white_hover font-bold'
             >
               <Menu />
-              <span className='text-[3vw] sm:hidden block'>Menu</span>
+              {/* <span className='text-[3vw] sm:hidden block'>Menu</span> */}
             </p>
 
-            <Link href='/planner' className={`basis-1/4 py-2 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover 
-              hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/planner' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
+            <Link href='/planner' className={`basis-1/4 py-4 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/planner' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <CalendarRange />
-              <span className='text-[3vw] sm:text-xs'>Planner</span>
+              <span className='text-[3vw] sm:text-xs hidden sm:inline'>Planner</span>
             </Link>
 
-            <Link href='/community' className={`basis-1/4 py-2 px-1 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover 
-              hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/community' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
+            <Link href='/community' className={`basis-1/4 py-4 px-1 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/community' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Users />
-              <span className='text-[3vw] sm:text-xs'>Community</span>
+              <span className='text-[3vw] sm:text-xs hidden sm:inline'>Community</span>
             </Link>
 
-            <Link href='/discover' className={`basis-1/4 py-2 w-full flex flex-col gap-2 items-center cursor-pointer 
-              dark:hover:bg-black_hover hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/discover' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
+            <Link href='/discover' className={`basis-1/4 py-4 w-full flex flex-col gap-2 items-center cursor-pointer dark:hover:bg-black_hover hover:bg-white_hover select-none text-sm font-bold rounded ${pathname === '/discover' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
               <Search />
-              <span className='text-[3vw] sm:text-xs'>Discover</span>
+              <span className='text-[3vw] sm:text-xs hidden sm:inline'>Discover</span>
             </Link>        
           </div>
 
-          <Link href='/planner' className={`hidden p-2 w-full mt-auto mb-8 sm:flex justify-center cursor-pointer 
-            dark:hover:bg-black_hover hover:bg-white_hover text-sm font-boldrounded ${pathname === '/planner' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
+          <Link href='/planner' className={`hidden p-2 w-full mt-auto mb-8 sm:flex justify-center cursor-pointer dark:hover:bg-black_hover hover:bg-white_hover text-sm font-boldrounded ${pathname === '/planner' ? 'dark:bg-black_hover bg-white_hover' : ''}`}>
             <Apple className='w-12 h-12' />
           </Link>
         </div>
