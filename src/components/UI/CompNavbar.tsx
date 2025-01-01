@@ -18,7 +18,7 @@ const CompNavbar:FC<CompNavbarProps> = ({className}) => {
 
         {/* desktop */}
 
-        <div className="gap-2 sm:flex items-center hidden py-4">
+        <div className="gap-2 sm:flex items-center hidden py-4 text-black_text_primary">
           <Link href='/' className="md:text-base sm:text-sm text-xs rounded hover:underline flex select-none
             items-center gap-1 p-1 max-w-[10rem]">
             <Grape />
