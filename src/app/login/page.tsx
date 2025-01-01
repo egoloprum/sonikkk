@@ -1,7 +1,16 @@
 import SignIn from "@/components/Sign-in"
+import { authOptions } from "@/lib/auth"
 import { User } from "lucide-react"
+import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation"
 
-const page = () => {
+const page = async () => {
+  const session = await getServerSession(authOptions)
+
+  if (session) {
+    redirect("planner")
+  }
+
   return (
     <div className="p-4 flex justify-center items-center h-[calc(100vh-100px)]">
 
