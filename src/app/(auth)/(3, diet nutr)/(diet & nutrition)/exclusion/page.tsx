@@ -1,4 +1,4 @@
-import { getExclusion, getExclusionCount } from "@/app/helpers/exclusionHelper"
+import { getExclusion } from "@/app/helpers/exclusionHelper"
 import ExclusionForm from "@/components/Diet & Nutrition/ExclusionForm"
 import PageNavbar from "@/components/UI/PageNavbar"
 import { authOptions } from "@/lib/auth"
@@ -84,10 +84,10 @@ const page = async ({}) => {
   const user_id = session.user.id
   const exclusion = await getExclusion(user_id)
 
-  let exclusionCount = 0
+  const exclusionCount = 0
 
   if (exclusion) {
-    exclusionCount = await getExclusionCount(exclusion.list)
+    // exclusionCount = await getExclusionCount(exclusion.list)
   }
 
   return (

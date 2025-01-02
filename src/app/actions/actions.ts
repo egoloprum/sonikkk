@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { updatePrimaryDiet } from "../helpers/dietHelper";
-import { updateExclusion } from "../helpers/exclusionHelper";
+import { getExclusion, updateExclusion } from "../helpers/exclusionHelper";
 import { recipeLikeAdd, recipeLikeRemove, recipeSaveAdd, recipeSaveRemove } from "../helpers/recipeHelper";
 
 export const submitDietAction = async (formData: FormData) => {
@@ -24,26 +24,24 @@ export const submitDietAction = async (formData: FormData) => {
 }
 
 export const submitExclusionAction = async (formData: FormData) => {
-  const user_id = formData.get("exclusionUserId") as string;
-  const exclusion = formData.get("exclusionName") as string;
-  let exclusionList = (formData.get("exclusionList") as string).split(',');
+  const user_id = formData.get("exclusionUserId") as string
+  const exclusion = formData.get("exclusionName") as string
 
-  const exclusionExists = exclusionList.includes(exclusion);
+  const response = await getExclusion(user_id)
+  let exclusionList = response?.list || [];
+
+  const exclusionExists = exclusionList.includes(exclusion)
 
   exclusionList = exclusionExists 
     ? exclusionList.filter(item => item !== exclusion) 
     : [...exclusionList, exclusion];
 
-  const responseExclusion = await updateExclusion(user_id, exclusionList);
+  const responseExclusion = await updateExclusion(user_id, exclusionList)
 
-  if (responseExclusion.status === 200) {
-    revalidatePath("/exclusion")
-  } else {
-    console.log("error")
-    return
-  }
+  if (responseExclusion.status === 200) { revalidatePath("/exclusion") } 
+  else { console.log("error"); return }
 
-  console.log(`${exclusion} has been ${exclusionExists ? 'removed' : 'added'}.`);
+  console.log(`${exclusion} has been ${exclusionExists ? 'removed' : 'added'}.`)
 }
 
 export const submitSavedAction = async (formData: FormData) => {
