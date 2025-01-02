@@ -63,8 +63,8 @@ const page = async ({}) => {
     <>
       <PageNavbar pageName="Primary Diet" />
       <div className="py-16 px-6 md:px-8 lg:px-10 flex justify-center">
-        <div className="py-4 flex flex-col gap-2 sm:gap-4 w-full max-w-[800px]">
-          <p className="text-xs sm:text-sm md:text-base">
+        <div className="py-4 flex flex-col gap-4 w-full max-w-[800px]">
+          <p className="text-sm sm:text-base">
             <span>
               We will base your meals off this main main diet type. 
               Choose Anything to customize your own unique diet from 
@@ -73,7 +73,7 @@ const page = async ({}) => {
             <Link href='/exclusion' className="underline underline-offset-4 ml-2">Exclusions menu screen.</Link>
           </p>
 
-          <div  className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             {defaultDiets.map((diet, index) => {
               
               return (

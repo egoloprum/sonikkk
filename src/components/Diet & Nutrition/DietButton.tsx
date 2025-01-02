@@ -45,8 +45,8 @@ const DietButton: FC<DietButtonProps> = ({diet}) => {
       }
       
       <p className='flex flex-col gap-1'>
-        <span className='self-start font-bold text-sm sm:text-base'>{diet.name}</span>
-        <span className='text-xs sm:text-sm md:text-base'>Excludes: {diet.exclusion}</span>
+        <span className='self-start font-bold text-base sm:text-lg'>{diet.name}</span>
+        <span className='text-sm sm:text-base text-start'>Excludes: {diet.exclusion}</span>
       </p>
     </button>
   )

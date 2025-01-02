@@ -16,14 +16,13 @@ const ExclusionForm: FC<ExclusionFormProps> = ({
 }) => {
   return (
     <form key={key} action={submitExclusionAction}
-      className={`${exclusionList?.includes(exclusion) ? 'dark:bg-black_hover bg-white_hover' : 
-        'hover:dark:bg-black_hover hover:bg-white_hover'} border border-gray_border 
-        rounded w-fit text-xs sm:text-sm select-none
+      className={`${exclusionList?.includes(exclusion) ? 'border-text_link' : 
+        'hover:dark:bg-black_hover hover:bg-white_hover border-black_border'} border-2  
+        rounded w-fit text-sm sm:text-base select-none
       `}>
 
       <input type="hidden" name="exclusionUserId" className="hidden" defaultValue={user_id} />
       <input type="hidden" name="exclusionName" className="hidden" defaultValue={exclusion} />
-      <input type="hidden" name="exclusionList" className="hidden" defaultValue={exclusionList ?? ""} />
 
       <ExclusionButton exclusion={exclusion} />
     </form>

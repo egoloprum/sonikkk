@@ -9,7 +9,7 @@ export const submitDietAction = async (formData: FormData) => {
   const user_id = formData.get("dietUserId") as string
   const dietName = formData.get("dietName") as string
   const diet = formData.get("dietList") as string
-  const dietList = diet.split(',')
+  const dietList = diet ? diet.split(',') : []
 
   const responseDiet = await updatePrimaryDiet(user_id, dietName)
   const responseExclusion = await updateExclusion(user_id, dietList)
