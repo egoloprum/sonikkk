@@ -4,18 +4,18 @@ import { FC, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { signInWithGoogle } from '@/utils/supabase/signin'
 
-interface SignInProps {
+interface SignInGoogleProps {
   className?: string
   children:   React.ReactNode
 }
 
-const SignIn: FC<SignInProps> = ({className, children}) => {
+const SignInGoogle: FC<SignInGoogleProps> = ({className, children}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const loginWithGoogle = async () => {
     try {
       setIsLoading(true)
-      signInWithGoogle()
+      await signInWithGoogle()
     } catch (error) { console.log(error) }
     finally { setIsLoading(false) }
   } 
@@ -31,4 +31,4 @@ const SignIn: FC<SignInProps> = ({className, children}) => {
   )
 }
 
-export default SignIn
+export default SignInGoogle

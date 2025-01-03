@@ -17,7 +17,7 @@ const SignInAnon: FC<SignInAnonProps> = ({
   const loginAnon = async () => {
     try {
       setIsLoading(true)
-      signInWithAnon()
+      await signInWithAnon()
     } catch (error) { console.log(error) }
     finally { setIsLoading(false) }
   } 

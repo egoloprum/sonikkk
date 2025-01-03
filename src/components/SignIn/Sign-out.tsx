@@ -16,7 +16,7 @@ const SignOut: FC<SignOutProps> = ({ className, children }) => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true)
-      signOut()
+      await signOut()
     } catch (error) { console.log(error) }
     finally { setIsLoading(false) }
   }

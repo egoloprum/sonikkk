@@ -1,5 +1,5 @@
-import SignIn from "@/components/Sign-in"
-import SignInAnon from "@/components/SignIn/SignInAnon"
+import SignInAnon from "@/components/SignIn/Sign-in-Anon"
+import SignInGoogle from "@/components/SignIn/Sign-in-Google"
 import { createClient } from "@/utils/supabase"
 import { redirect } from "next/navigation"
 
@@ -32,8 +32,8 @@ const page = async () => {
             Sign in anonymously
           </SignInAnon>
 
-          <SignIn className="bg-black_bg_btn border border-black_border p-4 flex text-black_text_primary
-            items-center gap-2 justify-center rounded-[0.35rem]">Sign in with google</SignIn>
+          <SignInGoogle className="bg-black_bg_btn border border-black_border p-4 flex text-black_text_primary
+            items-center gap-2 justify-center rounded-[0.35rem]">Sign in with google</SignInGoogle>
         </div>
 
       </div>

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {Apple, CalendarRange, ChartNoAxesColumn, ChartPie, ChevronDown, ChevronRight, CircleHelp,
         CircleUser, CookingPot, Goal, Menu, Power, PowerOff, Search, SlidersVertical, Star, Users } from 'lucide-react'
 import { FC, useEffect, useState } from 'react'
-import SignOut from '../Sign-out'
+import SignOut from '../SignIn/Sign-out'
 import { usePathname } from "next/navigation";
 
 interface CompSidebarProps {
