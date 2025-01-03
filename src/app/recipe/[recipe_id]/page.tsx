@@ -1,8 +1,7 @@
 import { recipeGetById, recipeLikedAlready, recipeSavedAlready } from "@/app/helpers/recipeHelper";
 import RecipeForm from "@/components/Recipe/RecipeForm";
 import PageNavbar from "@/components/UI/PageNavbar";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { createClient } from "@/utils/supabase";
 import { notFound } from "next/navigation";
 
 interface pageProps {
@@ -15,9 +14,12 @@ const page = async ({ params }: { params: Promise<pageProps['params']> }) => {
   const resolvedParams = await params
   const { recipe_id } = resolvedParams
 
-  const session = await getServerSession(authOptions)
-  if (!session) { notFound() }
-  const user_id = session.user.id 
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
+
+  if (!data.user) { notFound() }
+
+  const user_id = data.user.id
 
   const recipe = await recipeGetById(recipe_id)
 

@@ -1,8 +1,8 @@
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@/utils/supabase";
 import { QueryData } from "@supabase/supabase-js";
 
-
 export const createNutritionTarget = async (user_id: string) => {
+    const supabase = await createClient()
   const { data, error } = await supabase
     .from('nutritionTarget')
     .insert({ user_id: user_id, title: 'My Nutrition Target',
@@ -23,6 +23,7 @@ export const createNutritionTarget = async (user_id: string) => {
 }
 
 export const getNutritionAll = async (user_id: string) => {
+  const supabase = await createClient()
   const {data, error} = await supabase
     .from('nutritionTarget')
     .select('*')
@@ -37,6 +38,7 @@ export const getNutritionAll = async (user_id: string) => {
 }
 
 export const getNutrition = async (nutrition_id: string) => {
+  const supabase = await createClient()
   const {data, error} = await supabase
     .from('nutritionTarget')
     .select('*')
@@ -51,6 +53,7 @@ export const getNutrition = async (nutrition_id: string) => {
 }
 
 export const deleteNutritionTarget = async (nutrition_id: string) => {
+  const supabase = await createClient()
   const  {error } = await supabase
   .from('nutritionTarget')
   .delete()
@@ -64,6 +67,7 @@ export const deleteNutritionTarget = async (nutrition_id: string) => {
 }
 
 export const saveNutritionTarget = async (nutrition: NutritionTarget) => {
+  const supabase = await createClient()
   const { error } = await supabase
     .from('nutritionTarget')
     .update({ title: nutrition.title, calories: nutrition.calories, carbs: nutrition.carbs,

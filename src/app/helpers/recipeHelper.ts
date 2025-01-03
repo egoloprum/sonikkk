@@ -1,7 +1,8 @@
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@/utils/supabase"
 import { QueryData } from "@supabase/supabase-js"
 
 export const recipeSearch = async (keyword: string) => {
+    const supabase = await createClient()
   const { data, error } = await supabase
     .from('recipe')
     .select('*')
@@ -12,6 +13,7 @@ export const recipeSearch = async (keyword: string) => {
 }
 
 export const recipeGetById = async (recipe_id: string) => {
+  const supabase = await createClient()
   const { data, error } = await supabase
     .from('recipe')
     .select('*')
@@ -36,6 +38,7 @@ export const recipeSavedGetByIds = async (recipes_ids: { recipe_id: string }[]) 
 }
 
 export const recipeLikedAll = async (user_id: string): Promise<Response> => {
+  const supabase = await createClient()
   const { data: likedRecipes, error } = await supabase
     .from("recipeLiked")
     .select("recipe_id")
@@ -50,6 +53,7 @@ export const recipeLikedAll = async (user_id: string): Promise<Response> => {
 
 
 export const recipeLikedAlready = async (recipe_id: string, user_id: string): Promise<Response> => {
+  const supabase = await createClient()
   const { data: likedAlready, error } = await supabase
     .from('recipeLiked')
     .select('recipe_id, user_id')
@@ -81,6 +85,7 @@ export const recipeLikeAdd = async (recipe_id: string, user_id: string): Promise
     return new Response(JSON.stringify({ success: false, message: "Recipe already liked." }), { status: 400 })
   }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('recipeLiked')
     .insert(data)
@@ -100,6 +105,7 @@ export const recipeLikeRemove = async (recipe_id: string, user_id: string): Prom
     return new Response(JSON.stringify({ success: false, message: "Recipe not liked yet." }), { status: 400 });
   }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('recipeLiked')
     .delete()
@@ -114,6 +120,7 @@ export const recipeLikeRemove = async (recipe_id: string, user_id: string): Prom
 }
 
 export const recipeSavedAll = async (user_id: string):  Promise<Response> => {
+  const supabase = await createClient()
   const { data: savedRecipes, error } = await supabase
     .from('recipeSaved')
     .select('recipe_id')
@@ -127,6 +134,7 @@ export const recipeSavedAll = async (user_id: string):  Promise<Response> => {
 }
 
 export const recipeSavedAlready = async (recipe_id: string, user_id: string): Promise<Response> => {
+  const supabase = await createClient()
   const { data: savedAlready, error } = await supabase
     .from('recipeSaved')
     .select('recipe_id, user_id')
@@ -158,6 +166,7 @@ export const recipeSaveAdd = async (recipe_id: string, user_id: string): Promise
     return new Response(JSON.stringify({ success: false, message: "Recipe already saved." }), { status: 400 })
   }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('recipeSaved')
     .insert(data);
@@ -177,6 +186,7 @@ export const recipeSaveRemove = async (recipe_id: string, user_id: string): Prom
     return new Response(JSON.stringify({ success: false, message: "Recipe not saved yet." }), { status: 400 })
   }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('recipeSaved')
     .delete()

@@ -1,10 +1,9 @@
 import RecipeSearch from '@/components/Recipe/RecipeSearch'
 import RecipeTable from '@/components/Recipe/RecipeTable'
 import PageNavbar from '@/components/UI/PageNavbar'
-import { authOptions } from '@/lib/auth'
-import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import { recipeSearch } from '../helpers/recipeHelper'
+import { createClient } from '@/utils/supabase'
 
 interface SearchParams {
   query:    string
@@ -14,8 +13,10 @@ interface SearchParams {
 const page = async ({
   searchParams
 } : {searchParams: Promise<SearchParams>} ) => {
-  const session = await getServerSession(authOptions)
-  if (!session) { notFound() }
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
+
+  if (!data.user) { notFound() }
 
   const resolvedSearchParams = await searchParams;
   const query = resolvedSearchParams?.query || '';

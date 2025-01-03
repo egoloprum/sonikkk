@@ -1,15 +1,14 @@
 import SignIn from "@/components/Sign-in"
-import { authOptions } from "@/lib/auth"
-import { User } from "lucide-react"
-import { getServerSession } from "next-auth"
+import SignInAnon from "@/components/SignIn/SignInAnon"
+import { createClient } from "@/utils/supabase"
 import { redirect } from "next/navigation"
 
 const page = async () => {
-  const session = await getServerSession(authOptions)
 
-  if (session) {
-    redirect("planner")
-  }
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
+
+  if (data.user) { redirect("/planner") }
 
   return (
     <div className="p-4 flex justify-center items-center h-[calc(100vh-100px)]">
@@ -28,11 +27,10 @@ const page = async () => {
 
         <div className="flex flex-col gap-4">
 
-          <button className="bg-black_bg_btn border border-black_border p-4 flex text-black_text_primary
+          <SignInAnon className="bg-black_bg_btn border border-black_border p-4 flex text-black_text_primary
             items-center gap-2 justify-center rounded-[0.35rem]">
-            <User />
-            <p>Sign in anonymously</p>
-          </button>
+            Sign in anonymously
+          </SignInAnon>
 
           <SignIn className="bg-black_bg_btn border border-black_border p-4 flex text-black_text_primary
             items-center gap-2 justify-center rounded-[0.35rem]">Sign in with google</SignIn>

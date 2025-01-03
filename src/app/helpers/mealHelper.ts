@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@/utils/supabase"
 import { QueryData } from "@supabase/supabase-js"
 
 export const MealLikeAdd = async (user_id: string, meal_id: string) => {
@@ -7,6 +7,7 @@ export const MealLikeAdd = async (user_id: string, meal_id: string) => {
     user_id: user_id
   }
 
+    const supabase = await createClient()
   const {data: likedAlready} = await supabase
     .from('likedMeal')
     .select('meal_id,user_id')
@@ -26,6 +27,7 @@ export const MealLikeAdd = async (user_id: string, meal_id: string) => {
 } 
 
 export const MealLikeRemove = async (user_id: string, meal_id: string) => {
+  const supabase = await createClient()
   const {error} = await supabase
     .from('likedMeal')
     .delete()

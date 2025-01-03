@@ -1,10 +1,9 @@
-import { createPrimaryDiet, getPrimaryDiet } from "@/app/helpers/dietHelper"
+import { getPrimaryDiet } from "@/app/helpers/dietHelper"
 import PageNavbar from "@/components/UI/PageNavbar"
-import { authOptions } from "@/lib/auth"
-import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import DietForm from "@/components/Diet & Nutrition/DietForm"
+import { createClient } from "@/utils/supabase"
 
 const defaultDiets = [
   {
@@ -50,14 +49,13 @@ const defaultDiets = [
 ] 
 
 const page = async ({}) => {
-  const session = await getServerSession(authOptions)
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
 
-  if (!session) {notFound()}
+  if (!data.user) { notFound() }
 
-  const user_id = session.user.id
+  const user_id = data.user.id
   const primaryDiet = await getPrimaryDiet(user_id) as PrimaryDiet
-
-  if (!primaryDiet) { await createPrimaryDiet(user_id) }
 
   return (
     <>

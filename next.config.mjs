@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // redirects() {
+  //   return [
+  //     {
+  //       source: '/',
+  //       destination: '/planner',
+  //       permanent: false
+  //     },
+  //   ];
+  // },
+
   images: {
     remotePatterns: [
       {

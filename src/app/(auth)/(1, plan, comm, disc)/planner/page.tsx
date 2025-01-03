@@ -1,11 +1,12 @@
 import PageNavbar from "@/components/UI/PageNavbar"
-import { authOptions } from "@/lib/auth"
-import { getServerSession } from "next-auth"
+import { createClient } from "@/utils/supabase"
 import { notFound } from "next/navigation"
 
 const page = async ({}) => {
-  const session = await getServerSession(authOptions)
-  if (!session) {notFound()}
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
+
+  if (!data.user) { notFound() }
 
   return (
     <>

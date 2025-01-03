@@ -2,16 +2,17 @@ import { getNutritionAll } from "@/app/helpers/nutritionHelper"
 import NutritionAll from "@/components/Diet & Nutrition/NutritionAll"
 import NutritionCreate from "@/components/Diet & Nutrition/NutritionCreate"
 import PageNavbar from "@/components/UI/PageNavbar"
-import { authOptions } from "@/lib/auth"
+import { createClient } from "@/utils/supabase"
 import { Search } from "lucide-react"
-import { getServerSession } from "next-auth"
 import { notFound } from "next/navigation"
 
 const page = async ({}) => {
-  const session = await getServerSession(authOptions)
-  if (!session) {notFound()}
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
 
-  const user_id = session.user.id
+  if (!data.user) { notFound() }
+
+  const user_id = data.user.id
   let nutritionTargets = [] as NutritionTarget[] 
 
   try { nutritionTargets = await getNutritionAll(user_id) } 

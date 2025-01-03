@@ -1,9 +1,8 @@
 "use client"
 
 import { FC, useState } from 'react'
-import { signIn } from "next-auth/react"
-import toast from 'react-hot-toast'
 import { Loader2 } from 'lucide-react'
+import { signInWithGoogle } from '@/utils/supabase/signin'
 
 interface SignInProps {
   className?: string
@@ -14,8 +13,10 @@ const SignIn: FC<SignInProps> = ({className, children}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const loginWithGoogle = async () => {
-    try { setIsLoading(true); await signIn('google') }
-    catch (error) { console.log(error); toast.error('Something went wrong with your login.') } 
+    try {
+      setIsLoading(true)
+      signInWithGoogle()
+    } catch (error) { console.log(error) }
     finally { setIsLoading(false) }
   } 
 

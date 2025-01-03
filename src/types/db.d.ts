@@ -1,10 +1,3 @@
-interface User {
-  name: string 
-  email: string
-  image: string 
-  id: string
-}
-
 interface Exclusion {
   user_id: string 
   list: string[]

@@ -1,13 +1,11 @@
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { createClient } from "@/utils/supabase";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
 
-  if (session) {
-    redirect("planner")
-  }
+  if (data.user) { redirect("/planner") }
 
   return (
     <div className="text-black_text_primary">

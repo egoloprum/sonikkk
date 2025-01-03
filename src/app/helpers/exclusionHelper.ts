@@ -1,7 +1,8 @@
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@/utils/supabase"
 import { QueryData } from "@supabase/supabase-js"
 
 export const createExclusion = async (user_id: string) => {
+    const supabase = await createClient()
   const { error } = await supabase
     .from('exclusions')
     .insert({ user_id: user_id })
@@ -11,6 +12,7 @@ export const createExclusion = async (user_id: string) => {
 }
 
 export const getExclusion = async (user_id: string) => {
+  const supabase = await createClient()
   const {data, error} = await supabase
     .from('exclusions')
     .select('user_id, list')
@@ -31,6 +33,7 @@ export const updateExclusion = async (user_id: string, list: string[]) => {
     await createExclusion(user_id)
   }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('exclusions')
     .update({ list: list })
@@ -45,6 +48,7 @@ export const updateExclusion = async (user_id: string, list: string[]) => {
 }
 
 export const getExclusionCount = async (list: string[]) => {
+  const supabase = await createClient()
   const { data: excludedCount, error } = await supabase
     .rpc('count_excluded_recipes', {exclude_keywords: list}) as QueryData<{ data: number }>
 

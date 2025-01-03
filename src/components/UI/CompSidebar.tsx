@@ -49,8 +49,6 @@ const CompSidebar:FC<CompSidebarProps> = ({
 
   const expandSidebar = (condition: string) => {
     const viewportWidth = window.innerWidth;
-    console.log('Viewport Width:', viewportWidth);
-    console.log(condition)
 
     if ((condition == "SmallScreen" && viewportWidth < 640) || condition == "ExpandBtn") {
       const sidebar = isExpanded ? 'true' : 'false'

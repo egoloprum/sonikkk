@@ -1,8 +1,7 @@
 import { getExclusion } from "@/app/helpers/exclusionHelper"
 import ExclusionForm from "@/components/Diet & Nutrition/ExclusionForm"
 import PageNavbar from "@/components/UI/PageNavbar"
-import { authOptions } from "@/lib/auth"
-import { getServerSession } from "next-auth"
+import { createClient } from "@/utils/supabase"
 import { notFound } from "next/navigation"
 
 const defaultExclusions = [
@@ -78,10 +77,12 @@ const defaultExclusions = [
 
 
 const page = async ({}) => {
-  const session = await getServerSession(authOptions)
-  if (!session) {notFound()}
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
 
-  const user_id = session.user.id
+  if (!data.user) { notFound() }
+
+  const user_id = data.user.id
   const exclusion = await getExclusion(user_id)
 
   const exclusionCount = 0

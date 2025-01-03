@@ -4,15 +4,16 @@ import FilterComp from "@/components/UI/FilterComp"
 import LayoutComp from "@/components/UI/LayoutComp"
 import PageNavbar from "@/components/UI/PageNavbar"
 import SearchComp from "@/components/UI/SearchComp"
-import { authOptions } from "@/lib/auth"
-import { getServerSession } from "next-auth"
+import { createClient } from "@/utils/supabase"
 import { notFound } from "next/navigation"
 
 const page = async ({}) => {
-  const session = await getServerSession(authOptions)
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
 
-  if (!session) {notFound()}
-  const user_id = session.user.id
+  if (!data.user) { notFound() }
+
+  const user_id = data.user.id
 
   const responseSavedRecipes = await recipeSavedAll(user_id)
   const recipes_ids = await responseSavedRecipes.json() 

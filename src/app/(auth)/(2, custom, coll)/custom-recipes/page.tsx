@@ -1,13 +1,13 @@
 import PageNavbar from "@/components/UI/PageNavbar"
-import { authOptions } from "@/lib/auth"
+import { createClient } from "@/utils/supabase"
 import { CirclePlus, Search } from "lucide-react"
-import { getServerSession } from "next-auth"
 import { notFound } from "next/navigation"
 
 const page = async ({}) => {
-  const session = await getServerSession(authOptions)
+  const supabase = await createClient()
+  const {data} = await supabase.auth.getUser()
 
-  if (!session) {notFound()}
+  if (!data.user) { notFound() }
 
   return (
     <>
